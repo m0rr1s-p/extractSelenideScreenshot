@@ -65,6 +65,6 @@ jobs:
         with:
           gh-token: ${{ secrets.GH_TOKEN }}
           run-id: 11387453682
-          job-name: Trigger Selenide Tests
-          repo-name: planning
-          repo-owner: m0rr1s-p
+          job-name: 'tests_selenide / tests_selenide'
+          repo-name: 'planning'
+          repo-owner: 'm0rr1s-p'
