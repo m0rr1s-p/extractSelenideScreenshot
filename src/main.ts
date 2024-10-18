@@ -26,8 +26,21 @@ export async function run(): Promise<void> {
       owner: repoOwner,
       repo: repoName
     })
-    console.log('This is my manual output')
-    console.log(resJobs)
+
+    const job = resJobs.data.jobs.filter(
+      val => val.name === core.getInput('job-name')
+    )
+
+    core.debug(`Job ID: ${job[0].id}`)
+
+    core.debug('Getting workflow logs')
+    const workflowLogs =
+      await octokit.rest.actions.downloadJobLogsForWorkflowRun({
+        job_id: job[0].id,
+        owner: repoOwner,
+        repo: repoName
+      })
+    console.log(workflowLogs)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
