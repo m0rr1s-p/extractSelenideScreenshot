@@ -66,3 +66,5 @@ jobs:
           gh-token: ${{ secrets.GH_TOKEN }}
           run-id: 11387453682
           job-name: Trigger Selenide Tests
+          repo-name: planning
+          repo-owner: m0rr1s-p
