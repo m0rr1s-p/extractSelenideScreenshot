@@ -1,23 +1,35 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'extractSelenideScreenshot'
+description: 'GitHub Action to extract base64 encoded screenshot taken by Selenide from logs'
+author: 'm0rr1s-p'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: 'camera'
+  color: 'green'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  gh-token:
     required: true
-    default: '1000'
+    description: 'Github repo token'
+  run-id:
+    required: true
+    description: 'Github run ID'
+  job-name:
+    required: true
+    description: 'Current Job name'
+  repo-owner:
+    required: false
+    description: 'Repo owner'
+    default: ${{ github.repository_owner }}
+  repo-name:
+    required: false
+    description: 'Repo name'
+    default: ${{ github.repository }}
 
 # Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+
+
 
 runs:
   using: node20
