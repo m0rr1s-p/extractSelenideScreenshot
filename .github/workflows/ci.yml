@@ -69,5 +69,7 @@ jobs:
           repo-name: 'planning'
           repo-owner: 'm0rr1s-p'
       - name: Summary
-        run: echo '![image](/runner/_work/extractSelenideScreenshot/extractSelenideScreenshot/screenshot1223267.png)' >>  $GITHUB_STEP_SUMMARY
+        run: |
+          pwd
+          echo '![image](./extractSelenideScreenshot/screenshot1223267.png)' >>  $GITHUB_STEP_SUMMARY
 
