@@ -29246,6 +29246,7 @@ async function run() {
             repo: repoName
         });
         const job = resJobs.data.jobs.filter(val => val.name === core.getInput('job-name'));
+        console.log(job);
         core.debug(`Job ID: ${job[0].id}`);
         core.debug('Getting workflow logs');
         const workflowLogs = await octokit.rest.actions.downloadJobLogsForWorkflowRun({

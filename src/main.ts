@@ -30,7 +30,7 @@ export async function run(): Promise<void> {
     const job = resJobs.data.jobs.filter(
       val => val.name === core.getInput('job-name')
     )
-
+    console.log(job)
     core.debug(`Job ID: ${job[0].id}`)
 
     core.debug('Getting workflow logs')
