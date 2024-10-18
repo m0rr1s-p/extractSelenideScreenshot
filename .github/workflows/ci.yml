@@ -65,4 +65,4 @@ jobs:
         with:
           gh-token: ${{ secrets.GH_TOKEN }}
           run-id: 11387453682
-          job-name: TypeScript Tests
+          job-name: Trigger Selenide Tests
