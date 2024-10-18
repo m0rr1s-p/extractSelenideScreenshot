@@ -6,10 +6,9 @@ import * as github from '@actions/github'
  * @returns {Promise<void>} Resolves when the action is complete.
  */
 export async function run(): Promise<void> {
-
   try {
     core.debug('Get input for "gh-token"')
-    const ghToken: string = core.getInput('gh-token', {required: true})
+    const ghToken: string = core.getInput('gh-token', { required: true })
 
     core.debug('Get octokit instance')
     const octokit = github.getOctokit(ghToken)
@@ -27,19 +26,7 @@ export async function run(): Promise<void> {
       owner: repoOwner,
       repo: repoName
     })
-
-    const job = resJobs.data.jobs.filter(
-      val => val.name === core.getInput('job-name')
-    )
-
-    core.debug(`Job ID: ${job[0].id}`)
-
-    core.debug('Getting workflow logs')
-    const errorLogs = await octokit.rest.actions.downloadJobLogsForWorkflowRun({
-      job_id: job[0].id,
-      owner: repoOwner,
-      repo: repoName
-    })
+    console.log(resJobs)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)

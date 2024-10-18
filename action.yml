@@ -1,5 +1,7 @@
 name: 'extractSelenideScreenshot'
-description: 'GitHub Action to extract base64 encoded screenshot taken by Selenide from logs'
+description:
+  'GitHub Action to extract base64 encoded screenshot taken by Selenide from
+  logs'
 author: 'm0rr1s-p'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
@@ -28,8 +30,6 @@ inputs:
     default: ${{ github.repository }}
 
 # Define your outputs here.
-
-
 
 runs:
   using: node20
