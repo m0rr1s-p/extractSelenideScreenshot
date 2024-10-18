@@ -45,6 +45,8 @@ jobs:
       - name: Test
         id: npm-ci-test
         run: npm run ci-test
+      - name: RUN ID
+        run: echo "${{ github.run_id }}"
 
   test-action:
     needs: test-typescript
@@ -55,7 +57,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
-
+      - name: RUN ID
+        run: echo "${{ github.run_id }}"
       - name: Test Local Action
         id: test-action
         uses: ./
