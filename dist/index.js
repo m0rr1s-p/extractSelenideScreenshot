@@ -29246,7 +29246,7 @@ async function run() {
             repo: repoName
         });
         console.log(`resJobs:  ${resJobs}`);
-        console.log(`resJobs data jobs:  ${resJobs.data.jobs}`);
+        console.log(resJobs.data.jobs[0].name);
         const job = resJobs.data.jobs.filter(val => val.name === core.getInput('job-name'));
         console.log(`Job: ${job}`);
         core.debug(`Job ID: ${job[0].id}`);
