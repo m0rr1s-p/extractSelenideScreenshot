@@ -26,6 +26,7 @@ export async function run(): Promise<void> {
       owner: repoOwner,
       repo: repoName
     })
+    console.log("This is my manual output")
     console.log(resJobs)
   } catch (error) {
     // Fail the workflow run if an error occurs
