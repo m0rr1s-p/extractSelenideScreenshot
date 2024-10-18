@@ -29192,6 +29192,71 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 8406:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getImage = getImage;
+const fs = __importStar(__nccwpck_require__(7561));
+function getImage(data) {
+    function getIndicesOf(searchStr, str) {
+        const searchStrLen = searchStr.length;
+        if (searchStrLen == 0) {
+            return [];
+        }
+        let startIndex = 0, index;
+        const indices = [];
+        while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+            indices.push(index);
+            startIndex = index + searchStrLen;
+        }
+        return indices;
+    }
+    function getEndOf(startIndex) {
+        const sub = data.substring(startIndex);
+        return sub.indexOf('=\n') + 1 + startIndex;
+    }
+    const indices = getIndicesOf('Screenshot:', data);
+    for (const index of indices) {
+        const base64Image = data.substring(index + 103, getEndOf(index));
+        const imageName = `screenshot${index}.png`;
+        const buf = Buffer.from(base64Image, 'base64');
+        fs.writeFile(imageName, buf, function (err) {
+            if (err)
+                throw err;
+            console.log(`Saved as ${imageName}`);
+        });
+    }
+}
+
+
+/***/ }),
+
 /***/ 399:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -29224,6 +29289,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const extract_1 = __nccwpck_require__(8406);
+//import * as fs from 'node:fs'
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -29253,7 +29320,7 @@ async function run() {
             owner: repoOwner,
             repo: repoName
         });
-        console.log(workflowLogs);
+        (0, extract_1.getImage)(String(workflowLogs.data));
     }
     catch (error) {
         // Fail the workflow run if an error occurs
@@ -29366,6 +29433,14 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
+
+/***/ }),
+
+/***/ 7561:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs");
 
 /***/ }),
 

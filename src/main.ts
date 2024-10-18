@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-
+import { getImage } from './extract'
+//import * as fs from 'node:fs'
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -40,7 +41,8 @@ export async function run(): Promise<void> {
         owner: repoOwner,
         repo: repoName
       })
-    console.log(workflowLogs)
+
+    getImage(String(workflowLogs.data))
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
