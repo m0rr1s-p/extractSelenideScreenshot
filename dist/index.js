@@ -29245,6 +29245,7 @@ async function run() {
             owner: repoOwner,
             repo: repoName
         });
+        console.log('This is my manual output');
         console.log(resJobs);
     }
     catch (error) {
