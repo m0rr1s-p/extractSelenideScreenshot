@@ -65,4 +65,4 @@ jobs:
         with:
           gh-token: ${{ secrets.GH_TOKEN }}
           run-id: ${{ github.run_id }}
-          job-name: test-typescript
+          job-name: TypeScript Tests
