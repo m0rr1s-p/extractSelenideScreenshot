@@ -29239,9 +29239,7 @@ function getImage(data) {
     }
     function getEndOf(startIndex) {
         const sub = data.substring(startIndex);
-        return (sub.indexOf('[main] INFO  c.m.s.s.TestResultLoggerExtension - ------------------------------------------------------------------------------------') -
-            42 +
-            startIndex);
+        return sub.indexOf('=\n') + startIndex;
     }
     const indices = getIndicesOf('Screenshot:', data);
     for (const index of indices) {
