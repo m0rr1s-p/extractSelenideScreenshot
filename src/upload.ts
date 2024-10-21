@@ -1,4 +1,4 @@
-//import * as core from '@actions/core'
+import * as core from '@actions/core'
 import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
 
@@ -20,7 +20,10 @@ export async function uploader(
         overwrite: true
       })
       .then(result => {
-        console.log(result)
+        core.summary.addImage(result.secure_url, result.public_id)
+        core.info(
+          `Uploaded ${result.secure_url} as ${result.public_id} to Cloudinary`
+        )
       })
   }
 }
