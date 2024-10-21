@@ -16,7 +16,7 @@ export function getImage(data: string): void {
   }
   function getEndOf(startIndex: number): number {
     const sub = data.substring(startIndex)
-    return sub.indexOf('\n') + startIndex
+    return sub.indexOf('\r\n|\r|\n') + startIndex
   }
   const indices = getIndicesOf('Screenshot:', data)
   for (const index of indices) {
