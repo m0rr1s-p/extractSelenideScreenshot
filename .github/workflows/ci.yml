@@ -75,3 +75,4 @@ jobs:
           api-key: ${{ secrets.CLOUDINARY_API_KEY }}
           api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
           images: "./*.png"
+
