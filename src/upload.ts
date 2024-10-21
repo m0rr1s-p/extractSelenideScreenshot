@@ -20,7 +20,10 @@ export async function uploader(
         overwrite: true
       })
       .then(result => {
-        core.summary.addImage(result.secure_url, result.public_id)
+        core.summary
+          .addHeading('Selenide Screenshots', '2')
+          .addImage(result.secure_url, result.public_id)
+          .write()
         core.info(
           `Uploaded ${result.secure_url} as ${result.public_id} to Cloudinary`
         )
