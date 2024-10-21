@@ -16,11 +16,12 @@ export function getImage(data: string): void {
   }
   function getEndOf(startIndex: number): number {
     const sub = data.substring(startIndex)
-    return sub.indexOf('\n') + 1 + startIndex
+    return sub.indexOf('\n') + startIndex
   }
   const indices = getIndicesOf('Screenshot:', data)
   for (const index of indices) {
     const base64Image = data.substring(index + 103, getEndOf(index))
+    console.log(base64Image)
     const imageName = `screenshot${index}.png`
     const buf = Buffer.from(base64Image, 'base64')
     fs.writeFile(imageName, buf, function (err) {
