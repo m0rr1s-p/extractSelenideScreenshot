@@ -68,7 +68,7 @@ jobs:
           job-name: 'tests_selenide / tests_selenide'
           repo-name: 'planning'
           repo-owner: 'm0rr1s-p'
-          cloud-name: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          cloud-name: ${{ vars.CLOUDINARY_CLOUD_NAME }}
           api-key: ${{ secrets.CLOUDINARY_API_KEY }}
           api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
           images: './*.png'
