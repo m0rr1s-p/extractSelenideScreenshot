@@ -68,5 +68,10 @@ jobs:
           job-name: 'tests_selenide / tests_selenide'
           repo-name: 'planning'
           repo-owner: 'm0rr1s-p'
-
-
+      - name: Cloudinary upload
+        uses: emmanuelgautier/cloudinary-upload-action@v2
+        with:
+          cloud-name: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          api-key: ${{ secrets.CLOUDINARY_API_KEY }}
+          api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+          image: "./*.png"
