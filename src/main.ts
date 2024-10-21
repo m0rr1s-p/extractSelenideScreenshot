@@ -2,13 +2,13 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import { getImage } from './extract'
 import { uploader } from './upload'
-//import { glob } from 'glob'
+import { glob } from 'glob'
 //import * as fs from 'node:fs'
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
-/*function isJson(str: string): boolean {
+function isJson(str: string): boolean {
   try {
     JSON.parse(str)
   } catch (e) {
@@ -16,7 +16,7 @@ import { uploader } from './upload'
     return false
   }
   return true
-}*/
+}
 
 export async function run(): Promise<void> {
   try {
@@ -62,16 +62,16 @@ export async function run(): Promise<void> {
       core.getInput('api-key') || process.env.CLOUDINARY_API_KEY
     const apiSecret: string | undefined =
       core.getInput('api-secret') || process.env.CLOUDINARY_API_SECRET
-    //const imagesPath = core.getInput('images')
+    const imagesPath = core.getInput('images')
 
-    /*let paths = []
+    let paths: string[]
     if (isJson(imagesPath)) {
       paths = JSON.parse(imagesPath)
     } else {
       paths = glob.sync(imagesPath)
-    }*/
+    }
 
-    uploader(cloudName, apiKey, apiSecret)
+    await uploader(cloudName, apiKey, apiSecret, paths)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
