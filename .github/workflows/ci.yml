@@ -34,9 +34,9 @@ jobs:
         id: npm-ci
         run: npm ci
 
-#     - name: Check Format
-#       id: npm-format-check
-#       run: npm run format:check
+      #     - name: Check Format
+      #       id: npm-format-check
+      #       run: npm run format:check
 
       - name: Lint
         id: npm-lint
@@ -74,5 +74,4 @@ jobs:
           cloud-name: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           api-key: ${{ secrets.CLOUDINARY_API_KEY }}
           api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
-          images: "./*.png"
-
+          images: './*.png'
