@@ -28,6 +28,18 @@ inputs:
     required: false
     description: 'Repo name'
     default: ${{ github.repository }}
+  cloud-name:
+    description: 'Cloudinary account name'
+    required: false
+    default: '<name>'
+  api-key:
+    description: 'Cloudinary API Key'
+    required: false
+    default: '<api-key>'
+  api-secret:
+    description: 'Cloudinary API Secret Key'
+    required: false
+    default: '<api-secret>'
 
 # Define your outputs here.
 
