@@ -1,24 +1,77 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
-
+import * as github from '@actions/github'
+import { getImage } from './extract'
+import { uploader } from './upload'
+import { glob } from 'glob'
+//import * as fs from 'node:fs'
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
  */
+function isJson(str: string): boolean {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    console.log(e)
+    return false
+  }
+  return true
+}
+
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    core.debug('Get input for "gh-token"')
+    const ghToken: string = core.getInput('gh-token', { required: true })
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.debug('Get octokit instance')
+    const octokit = github.getOctokit(ghToken)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const repoOwner = core.getInput('repo-owner')
+    core.debug(`Repo owner: ${repoOwner}`)
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    const repoName = core.getInput('repo-name').replace(`${repoOwner}/`, '')
+    core.debug(`Repo name: ${repoName}`)
+
+    core.debug(`Job ID ${core.getInput('run-id')}`)
+    core.debug('Getting workflow jobs')
+    const resJobs = await octokit.rest.actions.listJobsForWorkflowRun({
+      run_id: Number(core.getInput('run-id')),
+      owner: repoOwner,
+      repo: repoName
+    })
+
+    const job = resJobs.data.jobs.filter(
+      val => val.name === core.getInput('job-name')
+    )
+
+    core.debug(`Job ID: ${job[0].id}`)
+
+    core.debug('Getting workflow logs')
+    const workflowLogs =
+      await octokit.rest.actions.downloadJobLogsForWorkflowRun({
+        job_id: job[0].id,
+        owner: repoOwner,
+        repo: repoName
+      })
+
+    getImage(String(workflowLogs.data))
+
+    const cloudName: string | undefined =
+      core.getInput('cloud-name') || process.env.CLOUDINARY_CLOUD_NAME
+    const apiKey: string | undefined =
+      core.getInput('api-key') || process.env.CLOUDINARY_API_KEY
+    const apiSecret: string | undefined =
+      core.getInput('api-secret') || process.env.CLOUDINARY_API_SECRET
+    const imagesPath = core.getInput('images')
+
+    let paths: string[]
+    if (isJson(imagesPath)) {
+      paths = JSON.parse(imagesPath)
+    } else {
+      paths = glob.sync(imagesPath)
+    }
+
+    await uploader(cloudName, apiKey, apiSecret, paths)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)

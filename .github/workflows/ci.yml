@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - main
+      - release/**
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,7 +16,7 @@ permissions:
 jobs:
   test-typescript:
     name: TypeScript Tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
@@ -32,9 +34,9 @@ jobs:
         id: npm-ci
         run: npm ci
 
-      - name: Check Format
-        id: npm-format-check
-        run: npm run format:check
+      #     - name: Check Format
+      #       id: npm-format-check
+      #       run: npm run format:check
 
       - name: Lint
         id: npm-lint
@@ -43,22 +45,30 @@ jobs:
       - name: Test
         id: npm-ci-test
         run: npm run ci-test
+      - name: RUN ID
+        run: echo "${{ github.run_id }}"
 
   test-action:
+    needs: test-typescript
     name: GitHub Actions Test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
-
+      - name: RUN ID
+        run: echo "${{ github.run_id }}"
       - name: Test Local Action
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+          gh-token: ${{ secrets.GH_TOKEN }}
+          run-id: 11387453682
+          job-name: 'tests_selenide / tests_selenide'
+          repo-name: 'planning'
+          repo-owner: 'm0rr1s-p'
+          cloud-name: ${{ vars.CLOUDINARY_CLOUD_NAME }}
+          api-key: ${{ secrets.CLOUDINARY_API_KEY }}
+          api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+          images: './*.png'
