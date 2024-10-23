@@ -3,16 +3,15 @@
 [![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 ![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
 [![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
 ## General
 
 This Action extracts base64 encoded images (screenshots) made by Selenide and
-converts them to PNG. After that the images are uploaded to [Cloudinary](https://cloudinary.com/),
-hence why you need an account there. Then the image will be added to the step summary
-with Markdown. The images will be saved in the working directory with the name
-"screenshot<index>.png".
+converts them to PNG. After that the images are uploaded to
+[Cloudinary](https://cloudinary.com/), hence why you need an account there. Then
+the image will be added to the step summary with Markdown. The images will be
+saved in the working directory with the name "screenshot<index>.png".
 
 ## Usage
 

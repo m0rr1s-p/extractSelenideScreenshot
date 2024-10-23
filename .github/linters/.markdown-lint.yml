@@ -15,7 +15,7 @@ MD030:
 
 # Allow inline HTML
 MD033:
-  allowed_elements: ["index"]
+  allowed_elements: ['index']
 # Code block style
 MD046:
   style: fenced
