@@ -71,7 +71,7 @@
     "base64-string": "^1.1.3",
     "cloudinary": "^2.5.1",
     "convert-base64-to-image": "^0.0.16",
-    "glob": "^11.0.0",
+    "glob": "^11.0.1",
     "is-glob": "^4.0.3",
     "js-base64": "^3.7.7"
   },
