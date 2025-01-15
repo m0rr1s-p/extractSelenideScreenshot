@@ -29704,32 +29704,45 @@ async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
         const data = new FormData();
-        // @ts-expect-error: Used as path and name
-        data.append('source', path, path);
+        data.append('source', path);
         console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);
-        const request = new Request(hostingUrl, {
+        fetch(hostingUrl, {
             method: 'POST',
             headers: {
                 'X-API-Key': apiKey,
                 'Content-Type': 'multipart/form-data'
             },
             body: data
+        }).then(response => {
+            response.json().then(result => {
+                core.summary
+                    .addHeading('Selenide Screenshots', '2')
+                    .addImage(result.url, result.name)
+                    .write();
+            });
         });
-        console.log('Request: ', request);
-        try {
-            const response = await fetch(request);
-            const result = await response.json();
-            console.log('Result: ', result);
-            await core.summary
-                .addHeading('Selenide Screenshots', '2')
-                .addImage(result.url, result.name)
-                .write();
-        }
-        catch (error) {
-            console.error('Error: ', error);
-        }
+        //const request = new Request(hostingUrl, {
+        //  method: 'POST',
+        //  headers: {
+        //    'X-API-Key': apiKey,
+        //    'Content-Type': 'multipart/form-data'
+        //  },
+        //  body: data
+        //})
+        //console.log('Request: ', request)
+        //try {
+        //  const response = await fetch(request)
+        //  const result = await response.json()
+        //  console.log('Result: ', result)
+        //  await core.summary
+        //    .addHeading('Selenide Screenshots', '2')
+        //    .addImage(result.url, result.name)
+        //    .write()
+        //} catch (error) {
+        //  console.error('Error: ', error)
+        //}
     }
 }
 
