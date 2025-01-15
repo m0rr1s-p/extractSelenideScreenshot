@@ -40,8 +40,8 @@ export async function uploader(
     // insert HTTP request function here
     const formData = new FormData()
     formData.append('source', path)
-    console.log(hostingUrl)
-    console.log(path)
+    console.log('URL: ', hostingUrl)
+    console.log('Path: ', path)
     const request = new Request(hostingUrl, {
       method: 'POST',
       headers: {
@@ -49,7 +49,7 @@ export async function uploader(
       },
       body: formData
     })
-    console.log(request)
+    console.log('Request: ', request)
     try {
       const response = await fetch(request)
       const result = await response.json()

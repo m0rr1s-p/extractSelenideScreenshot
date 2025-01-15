@@ -29705,8 +29705,8 @@ async function uploader(hostingUrl, apiKey, paths) {
         // insert HTTP request function here
         const formData = new FormData();
         formData.append('source', path);
-        console.log(hostingUrl);
-        console.log(path);
+        console.log('URL: ', hostingUrl);
+        console.log('Path: ', path);
         const request = new Request(hostingUrl, {
             method: 'POST',
             headers: {
@@ -29714,7 +29714,7 @@ async function uploader(hostingUrl, apiKey, paths) {
             },
             body: formData
         });
-        console.log(request);
+        console.log('Request: ', request);
         try {
             const response = await fetch(request);
             const result = await response.json();
