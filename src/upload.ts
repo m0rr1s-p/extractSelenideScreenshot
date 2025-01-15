@@ -1,32 +1,62 @@
 import * as core from '@actions/core'
-import { v2 as cloudinary } from 'cloudinary'
+//import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
 
+//export async function uploader(
+//  cloudName: string | undefined,
+//  apiKey: string | undefined,
+//  apiSecret: string | undefined,
+//  paths: string[]
+//): Promise<void> {
+//  cloudinary.config({
+//    cloud_name: cloudName,
+//    api_key: apiKey,
+//    api_secret: apiSecret
+//  })
+//  for (const path of paths) {
+//    cloudinary.uploader
+//      .upload(path, {
+//        use_filename: true,
+//        overwrite: true
+//      })
+//      .then(result => {
+//        core.summary
+//          .addHeading('Selenide Screenshots', '2')
+//          .addImage(result.secure_url, result.public_id)
+//          .write()
+//        core.info(
+//          `Uploaded ${result.secure_url} as ${result.public_id} to Cloudinary`
+//        )
+//      })
+//  }
+//}
+
 export async function uploader(
-  cloudName: string | undefined,
-  apiKey: string | undefined,
-  apiSecret: string | undefined,
+  hostingUrl: string,
+  apiKey: string ,
   paths: string[]
 ): Promise<void> {
-  cloudinary.config({
-    cloud_name: cloudName,
-    api_key: apiKey,
-    api_secret: apiSecret
-  })
   for (const path of paths) {
-    cloudinary.uploader
-      .upload(path, {
-        use_filename: true,
-        overwrite: true
-      })
-      .then(result => {
-        core.summary
-          .addHeading('Selenide Screenshots', '2')
-          .addImage(result.secure_url, result.public_id)
-          .write()
-        core.info(
-          `Uploaded ${result.secure_url} as ${result.public_id} to Cloudinary`
-        )
-      })
+    // insert HTTP request function here
+    const formData = new FormData()
+    formData.append("source", path)
+    const request = new Request(hostingUrl, {
+      method: 'POST',
+      headers: {
+        'X-API-Key': apiKey,
+      },
+      body: formData
+    })
+    try {
+      const response = await fetch(request)
+      const result = await response.json()
+      console.log('Success: ', result)
+      await core.summary
+        .addHeading('Selenide Screenshots', '2')
+        .addImage(result.url, result.name)
+        .write()
+    } catch (error) {
+      console.error('Error: ', error)
+    }
   }
 }

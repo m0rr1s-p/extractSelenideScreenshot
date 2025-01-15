@@ -3,6 +3,7 @@ import * as github from '@actions/github'
 import { getImage } from './extract'
 import { uploader } from './upload'
 import { glob } from 'glob'
+import * as url from 'node:url'
 //import * as fs from 'node:fs'
 /**
  * The main function for the action.
@@ -56,13 +57,11 @@ export async function run(): Promise<void> {
 
     getImage(String(workflowLogs.data))
 
-    const cloudName: string | undefined =
-      core.getInput('cloud-name') || process.env.CLOUDINARY_CLOUD_NAME
-    const apiKey: string | undefined =
-      core.getInput('api-key') || process.env.CLOUDINARY_API_KEY
-    const apiSecret: string | undefined =
-      core.getInput('api-secret') || process.env.CLOUDINARY_API_SECRET
-    const imagesPath = core.getInput('images')
+    const hostingUrl: string =
+      core.getInput('hosting-url')
+    const apiKey: string =
+      core.getInput('api-key')
+    const imagesPath: string = core.getInput('images')
 
     let paths: string[]
     if (isJson(imagesPath)) {
@@ -71,7 +70,7 @@ export async function run(): Promise<void> {
       paths = glob.sync(imagesPath)
     }
 
-    await uploader(cloudName, apiKey, apiSecret, paths)
+    await uploader(hostingUrl, apiKey, paths)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
