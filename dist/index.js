@@ -29703,17 +29703,19 @@ const core = __importStar(__nccwpck_require__(2186));
 async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
-        const formData = new FormData();
-        formData.append('source', '@' + path);
-        console.log('Body: ', formData);
+        const data = new FormData();
+        // @ts-expect-error: Used as path and name
+        data.append('source', path, path);
+        console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);
         const request = new Request(hostingUrl, {
             method: 'POST',
             headers: {
-                'X-API-Key': apiKey
+                'X-API-Key': apiKey,
+                'Content-Type': 'multipart/form-data'
             },
-            body: formData
+            body: data
         });
         console.log('Request: ', request);
         try {
