@@ -29704,7 +29704,7 @@ async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
         const data = new FormData();
-        data.append('source', path);
+        data.append('source', '=@' + path);
         console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);
@@ -29714,7 +29714,7 @@ async function uploader(hostingUrl, apiKey, paths) {
                 'X-API-Key': apiKey,
                 'Content-Type': 'multipart/form-data'
             },
-            body: 'source=@' + path
+            body: data
         }).then(response => {
             response.json().then(result => {
                 core.summary
