@@ -33,17 +33,17 @@ import * as core from '@actions/core'
 
 export async function uploader(
   hostingUrl: string,
-  apiKey: string ,
+  apiKey: string,
   paths: string[]
 ): Promise<void> {
   for (const path of paths) {
     // insert HTTP request function here
     const formData = new FormData()
-    formData.append("source", path)
+    formData.append('source', path)
     const request = new Request(hostingUrl, {
       method: 'POST',
       headers: {
-        'X-API-Key': apiKey,
+        'X-API-Key': apiKey
       },
       body: formData
     })

@@ -3,7 +3,7 @@ import * as github from '@actions/github'
 import { getImage } from './extract'
 import { uploader } from './upload'
 import { glob } from 'glob'
-import * as url from 'node:url'
+//import * as url from 'node:url'
 //import * as fs from 'node:fs'
 /**
  * The main function for the action.
@@ -57,10 +57,8 @@ export async function run(): Promise<void> {
 
     getImage(String(workflowLogs.data))
 
-    const hostingUrl: string =
-      core.getInput('hosting-url')
-    const apiKey: string =
-      core.getInput('api-key')
+    const hostingUrl: string = core.getInput('hosting-url')
+    const apiKey: string = core.getInput('api-key')
     const imagesPath: string = core.getInput('images')
 
     let paths: string[]
