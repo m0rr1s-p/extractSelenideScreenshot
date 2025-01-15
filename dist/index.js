@@ -29714,7 +29714,7 @@ async function uploader(hostingUrl, apiKey, paths) {
                 'X-API-Key': apiKey,
                 'Content-Type': 'multipart/form-data'
             },
-            body: 'source=' + path
+            body: 'source=@' + path
         }).then(response => {
             response.json().then(result => {
                 core.summary
