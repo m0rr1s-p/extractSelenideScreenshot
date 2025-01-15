@@ -40,6 +40,7 @@ export async function uploader(
     // insert HTTP request function here
     const formData = new FormData()
     formData.append('source', path)
+    console.log('Body: ', formData)
     console.log('URL: ', hostingUrl)
     console.log('Path: ', path)
     const request = new Request(hostingUrl, {
