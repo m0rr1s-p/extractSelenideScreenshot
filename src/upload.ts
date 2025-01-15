@@ -39,7 +39,7 @@ export async function uploader(
   for (const path of paths) {
     // insert HTTP request function here
     const formData = new FormData()
-    formData.append('source', path)
+    formData.append('source', '@' + path)
     console.log('Body: ', formData)
     console.log('URL: ', hostingUrl)
     console.log('Path: ', path)
@@ -54,7 +54,7 @@ export async function uploader(
     try {
       const response = await fetch(request)
       const result = await response.json()
-      console.log('Success: ', result)
+      console.log('Result: ', result)
       await core.summary
         .addHeading('Selenide Screenshots', '2')
         .addImage(result.url, result.name)
