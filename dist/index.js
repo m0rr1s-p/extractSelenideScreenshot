@@ -29672,6 +29672,7 @@ exports.uploader = uploader;
 const core = __importStar(__nccwpck_require__(2186));
 //import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
+const fs = __importStar(__nccwpck_require__(7147));
 //export async function uploader(
 //  cloudName: string | undefined,
 //  apiKey: string | undefined,
@@ -29704,7 +29705,8 @@ async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
         const data = new FormData();
-        data.append('source', path);
+        // @ts-expect-error: need that file
+        data.append('source', fs.createReadStream(path));
         console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);

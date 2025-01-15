@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 //import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
+import * as fs from 'fs'
 
 //export async function uploader(
 //  cloudName: string | undefined,
@@ -39,7 +40,8 @@ export async function uploader(
   for (const path of paths) {
     // insert HTTP request function here
     const data = new FormData()
-    data.append('source', path)
+    // @ts-expect-error: need that file
+    data.append('source', fs.createReadStream(path))
     console.log('Body: ', data)
     console.log('URL: ', hostingUrl)
     console.log('Path: ', path)
