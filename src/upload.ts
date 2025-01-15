@@ -40,7 +40,7 @@ export async function uploader(
   for (const path of paths) {
     // insert HTTP request function here
     const data = new FormData()
-    // @ts-expect-error: need that file
+    // @ts-expect-error: keine ahnung
     data.append('source', fs.createReadStream(path))
     console.log('Body: ', data)
     console.log('URL: ', hostingUrl)
