@@ -29721,6 +29721,7 @@ async function uploader(hostingUrl, apiKey, paths) {
                     .addHeading('Selenide Screenshots', '2')
                     .addImage(result.url, result.name)
                     .write();
+                console.log('Result: ', result);
             });
         });
         //const request = new Request(hostingUrl, {
