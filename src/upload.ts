@@ -17,13 +17,13 @@ import * as child_process from 'child_process'
 //    exec(`curl --fail-with-body -X POST -H "X-API-Key: $\{api_key}" -F "source=@$\{path}" ${hostingUrl}`)
 //  }
 //}
-
-export function uploader(
+export async function uploader(
   hostingUrl: string | undefined,
   apiKey: string | undefined,
   paths: string[]
-): void {
+): Promise<void> {
   for (const path of paths) {
+    await new Promise(r => setTimeout(r, 2000))
     child_process.exec(
       `curl -s --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" ${hostingUrl}`,
       (error, stdout, stderr) => {
