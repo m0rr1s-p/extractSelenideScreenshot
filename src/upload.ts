@@ -31,8 +31,12 @@ export async function uploader(
           console.error(`exec error: ${error}`)
           return
         }
-        console.log(`stdout: ${stdout}`)
-        console.log(`stderr: ${stderr}`)
+        if (stderr) {
+          console.error(`stderr: ${stderr}`)
+          return
+        }
+        const response = JSON.parse(stdout)
+        console.log(response)
       }
     )
   }

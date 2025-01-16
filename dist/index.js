@@ -29526,7 +29526,7 @@ function getImage(data) {
     const indices = getIndicesOf('Screenshot:', data);
     for (const index of indices) {
         const base64Image = data.substring(index + 103, getEndOf(index));
-        console.log(base64Image);
+        //console.log(base64Image)
         const imageName = `screenshot${index}.png`;
         const buf = Buffer.from(base64Image, 'base64');
         fs.writeFile(imageName, buf, function (err) {
@@ -29694,8 +29694,12 @@ async function uploader(hostingUrl, apiKey, paths) {
                 console.error(`exec error: ${error}`);
                 return;
             }
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
+            if (stderr) {
+                console.error(`stderr: ${stderr}`);
+                return;
+            }
+            const response = JSON.parse(stdout);
+            console.log(response);
         });
     }
 }
