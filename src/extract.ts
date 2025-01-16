@@ -1,5 +1,9 @@
 import * as fs from 'node:fs'
-export function getImage(data: string): void {
+export function getImage(
+  data: string,
+  hostingUrl: string,
+  apiKey: string
+): void {
   function getIndicesOf(searchStr: string, str: string): number[] {
     const searchStrLen = searchStr.length
     if (searchStrLen == 0) {
@@ -33,6 +37,19 @@ export function getImage(data: string): void {
     fs.writeFile(imageName, buf, function (err) {
       if (err) throw err
       console.log(`Saved as ${imageName}`)
+    })
+    const formData = new FormData()
+    formData.append('source', base64Image)
+    fetch(hostingUrl, {
+      method: 'POST',
+      headers: {
+        'X-API-Key': apiKey
+      },
+      body: formData
+    }).then(response => {
+      response.json().then(result => {
+        console.log('Result: ', result)
+      })
     })
   }
 }

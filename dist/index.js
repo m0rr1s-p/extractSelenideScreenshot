@@ -29503,7 +29503,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImage = getImage;
 const fs = __importStar(__nccwpck_require__(7561));
-function getImage(data) {
+function getImage(data, hostingUrl, apiKey) {
     function getIndicesOf(searchStr, str) {
         const searchStrLen = searchStr.length;
         if (searchStrLen == 0) {
@@ -29533,6 +29533,19 @@ function getImage(data) {
             if (err)
                 throw err;
             console.log(`Saved as ${imageName}`);
+        });
+        const formData = new FormData();
+        formData.append('source', base64Image);
+        fetch(hostingUrl, {
+            method: 'POST',
+            headers: {
+                'X-API-Key': apiKey
+            },
+            body: formData
+        }).then(response => {
+            response.json().then(result => {
+                console.log('Result: ', result);
+            });
         });
     }
 }
@@ -29616,10 +29629,10 @@ async function run() {
             owner: repoOwner,
             repo: repoName
         });
-        (0, extract_1.getImage)(String(workflowLogs.data));
         const hostingUrl = core.getInput('hosting-url');
         const apiKey = core.getInput('api-key');
         const imagesPath = core.getInput('images');
+        (0, extract_1.getImage)(String(workflowLogs.data), hostingUrl, apiKey);
         let paths;
         if (isJson(imagesPath)) {
             paths = JSON.parse(imagesPath);

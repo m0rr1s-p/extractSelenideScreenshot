@@ -55,11 +55,11 @@ export async function run(): Promise<void> {
         repo: repoName
       })
 
-    getImage(String(workflowLogs.data))
-
     const hostingUrl: string = core.getInput('hosting-url')
     const apiKey: string = core.getInput('api-key')
     const imagesPath: string = core.getInput('images')
+
+    getImage(String(workflowLogs.data), hostingUrl, apiKey)
 
     let paths: string[]
     if (isJson(imagesPath)) {
