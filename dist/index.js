@@ -29709,7 +29709,6 @@ async function uploader(hostingUrl, apiKey, paths) {
         console.log('App Path: ', appPath);
         const filePath = appPath + '/' + path;
         const fileStream = fs.createReadStream(filePath);
-        console.log('File: ', fileStream);
         const data = new FormData();
         // @ts-expect-error: testing
         data.append('file', fileStream);
