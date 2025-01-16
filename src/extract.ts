@@ -71,7 +71,8 @@ async function uploadImage(
   const response = await fetch(hostingUrl, {
     method: 'POST',
     headers: {
-      'X-API-Key': apiKey
+      'X-API-Key': apiKey,
+      'Content-Length': base64Image.length.toString()
     },
     body: formData
   })
