@@ -1,4 +1,5 @@
 import * as fs from 'node:fs'
+import * as core from '@actions/core'
 export function getImage(
   data: string,
   hostingUrl: string,
@@ -28,6 +29,7 @@ export function getImage(
       startIndex
     )
   }
+  core.summary.addHeading('Selenide Screenshots', '2')
   const indices = getIndicesOf('Screenshot:', data)
   for (const index of indices) {
     const base64Image = data.substring(index + 103, getEndOf(index))
@@ -48,6 +50,7 @@ export function getImage(
       body: formData
     }).then(response => {
       response.json().then(result => {
+        core.summary.addImage(result.image.url, result.image.name).write()
         console.log('Result: ', result)
       })
     })
