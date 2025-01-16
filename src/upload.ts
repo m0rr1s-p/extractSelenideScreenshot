@@ -25,7 +25,15 @@ export function uploader(
 ): void {
   for (const path of paths) {
     child_process.exec(
-      `curl --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" ${hostingUrl}`
+      `curl -s --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" ${hostingUrl}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`exec error: ${error}`)
+          return
+        }
+        console.log(`stdout: ${stdout}`)
+        console.log(`stderr: ${stderr}`)
+      }
     )
   }
 }
