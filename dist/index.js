@@ -29267,10 +29267,8 @@ function getImage(data, hostingUrl, apiKey) {
         }).then(response => {
             response.json().then(result => {
                 console.log('URL: ', result?.image?.url);
-                console.log('Name: ', result.image.original_name);
-                core.summary
-                    .addImage(result?.image?.url, result.image.original_name)
-                    .write();
+                console.log('Name: ', result?.image?.name);
+                core.summary.addImage(result?.image?.url, result?.image?.name).write();
             });
         });
     }
