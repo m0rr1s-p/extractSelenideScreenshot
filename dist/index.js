@@ -29715,6 +29715,19 @@ async function readImageFile(filePath) {
         });
     });
 }
+async function readImageAsBase64(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                reject(`Fehler beim Lesen der Datei: ${err.message}`);
+            }
+            else {
+                const base64String = data.toString('base64');
+                resolve(base64String);
+            }
+        });
+    });
+}
 async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
@@ -29728,15 +29741,10 @@ async function uploader(hostingUrl, apiKey, paths) {
             .catch(error => {
             console.error('Fehler:', error);
         });
-        //const fileStream = fs.createReadStream(filePath)
-        //const image =  fs.readFile(
-        //  filePath,
-        //  (err, data) => {
-        //    if (err) throw err
-        //    console.log('File: ', data)
-        //  })
         //const data = new FormData()
-        //data.append('source', fs.readFile(filePath))
+        const image = readImageAsBase64(imageFilePath);
+        console.log('Image: ', image);
+        //data.append('source', image)
         //console.log('Body: ', data)
         //console.log('URL: ', hostingUrl)
         //console.log('Path: ', path)
