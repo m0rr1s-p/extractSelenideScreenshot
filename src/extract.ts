@@ -41,6 +41,8 @@ export function getImage(
       console.log(`Saved as ${imageName}`)
     })
     uploadImage(base64Image, hostingUrl, apiKey)
+
+    //uploadImage(base64Image, hostingUrl, apiKey)
     //const formData = new FormData()
     //formData.append('source', base64Image)
     //fetch(hostingUrl, {
@@ -60,22 +62,43 @@ export function getImage(
   }
 }
 
+//async function uploadImage(
+//  base64Image: string,
+//  hostingUrl: string,
+//  apiKey: string
+//): Promise<void> {
+//  const formData = new FormData()
+//  formData.append('source', base64Image)
+//  console.log('FormData: ', formData)
+//  const length = formData.toString().length
+//  const response = await fetch(hostingUrl, {
+//    method: 'POST',
+//    headers: {
+//      'X-API-Key': apiKey,
+//      'Content-Length': length.toString()
+//    },
+//    body: formData
+//  })
+//  console.log(response)
+//}
+
 async function uploadImage(
   base64Image: string,
   hostingUrl: string,
   apiKey: string
 ): Promise<void> {
+  const myHeaders = new Headers()
+  myHeaders.append('X-API-Key', apiKey)
   const formData = new FormData()
   formData.append('source', base64Image)
-  console.log('FormData: ', formData)
-  const length = formData.toString().length
-  const response = await fetch(hostingUrl, {
+
+  const requestOptions = {
     method: 'POST',
-    headers: {
-      'X-API-Key': apiKey,
-      'Content-Length': length.toString()
-    },
+    headers: myHeaders,
     body: formData
-  })
-  console.log(response)
+  }
+  await fetch(hostingUrl, requestOptions)
+    .then(async response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.error(error))
 }
