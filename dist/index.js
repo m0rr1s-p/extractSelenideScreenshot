@@ -29279,11 +29279,12 @@ async function uploadImage(base64Image, hostingUrl, apiKey) {
     const formData = new FormData();
     formData.append('source', base64Image);
     console.log('FormData: ', formData);
+    const length = formData.toString().length;
     const response = await fetch(hostingUrl, {
         method: 'POST',
         headers: {
             'X-API-Key': apiKey,
-            'Content-Length': base64Image.length.toString()
+            'Content-Length': length.toString()
         },
         body: formData
     });
