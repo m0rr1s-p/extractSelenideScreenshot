@@ -40,10 +40,12 @@ export async function uploader(
 ): Promise<void> {
   for (const path of paths) {
     // insert HTTP request function here
-    const fileStream = fs.createReadStream('./' + path)
-    console.log('File: ', fileStream)
+
     const appPath = process.cwd()
     console.log('App Path: ', appPath)
+    const filePath = appPath + '/' + path
+    const fileStream = fs.createReadStream(filePath)
+    console.log('File: ', fileStream)
     const data = new FormData()
     // @ts-expect-error: testing
     data.append('source', fileStream)
