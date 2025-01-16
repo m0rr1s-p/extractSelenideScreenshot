@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 //import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
 import * as fs from 'fs'
+import * as process from 'node:process'
 
 //export async function uploader(
 //  cloudName: string | undefined,
@@ -39,8 +40,10 @@ export async function uploader(
 ): Promise<void> {
   for (const path of paths) {
     // insert HTTP request function here
-    const fileStream = fs.createReadStream(path)
+    const fileStream = fs.createReadStream('./' + path)
     console.log('File: ', fileStream)
+    const appPath = process.cwd()
+    console.log('App Path: ', appPath)
     const data = new FormData()
     // @ts-expect-error: testing
     data.append('source', fileStream)

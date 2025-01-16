@@ -29673,6 +29673,7 @@ const core = __importStar(__nccwpck_require__(2186));
 //import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
 const fs = __importStar(__nccwpck_require__(7147));
+const process = __importStar(__nccwpck_require__(7742));
 //export async function uploader(
 //  cloudName: string | undefined,
 //  apiKey: string | undefined,
@@ -29704,8 +29705,10 @@ const fs = __importStar(__nccwpck_require__(7147));
 async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
-        const fileStream = fs.createReadStream(path);
+        const fileStream = fs.createReadStream('./' + path);
         console.log('File: ', fileStream);
+        const appPath = process.cwd();
+        console.log('App Path: ', appPath);
         const data = new FormData();
         // @ts-expect-error: testing
         data.append('source', fileStream);
@@ -29879,6 +29882,14 @@ module.exports = require("node:fs/promises");
 
 "use strict";
 module.exports = require("node:path");
+
+/***/ }),
+
+/***/ 7742:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:process");
 
 /***/ }),
 
