@@ -29712,7 +29712,7 @@ async function uploader(hostingUrl, apiKey, paths) {
         console.log('File: ', fileStream);
         const data = new FormData();
         // @ts-expect-error: testing
-        data.append('source', fileStream);
+        data.append('file', fileStream);
         console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);
