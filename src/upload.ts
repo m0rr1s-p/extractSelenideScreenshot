@@ -1,4 +1,4 @@
-//import * as core from '@actions/core'
+import * as core from '@actions/core'
 import * as child_process from 'child_process'
 //import * as path from 'path'
 
@@ -22,6 +22,7 @@ export async function uploader(
   apiKey: string | undefined,
   paths: string[]
 ): Promise<void> {
+  core.summary.addHeading('Selenide Screenshots', '2')
   for (const path of paths) {
     await new Promise(r => setTimeout(r, 2000))
     child_process.exec(
@@ -36,7 +37,9 @@ export async function uploader(
           return
         }
         const response = JSON.parse(stdout)
-        console.log(response)
+        core.summary.addRaw(response.image.name)
+        core.summary.addImage(response.image.url, response.image.name)
+        core.summary.write()
       }
     )
   }

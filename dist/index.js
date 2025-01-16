@@ -29668,7 +29668,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.uploader = uploader;
-//import * as core from '@actions/core'
+const core = __importStar(__nccwpck_require__(2186));
 const child_process = __importStar(__nccwpck_require__(2081));
 //import * as path from 'path'
 //export async function uploader(
@@ -29687,6 +29687,7 @@ const child_process = __importStar(__nccwpck_require__(2081));
 //  }
 //}
 async function uploader(hostingUrl, apiKey, paths) {
+    core.summary.addHeading('Selenide Screenshots', '2');
     for (const path of paths) {
         await new Promise(r => setTimeout(r, 2000));
         child_process.exec(`curl -s --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" ${hostingUrl}`, (error, stdout, stderr) => {
@@ -29699,7 +29700,9 @@ async function uploader(hostingUrl, apiKey, paths) {
                 return;
             }
             const response = JSON.parse(stdout);
-            console.log(response);
+            core.summary.addRaw(response.image.name);
+            core.summary.addImage(response.image.url, response.image.name);
+            core.summary.write();
         });
     }
 }
