@@ -1,8 +1,9 @@
-import * as core from '@actions/core'
+//import * as core from '@actions/core'
 //import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
 import * as fs from 'fs'
 import * as process from 'node:process'
+//import * as buffer from 'node:buffer'
 
 //export async function uploader(
 //  cloudName: string | undefined,
@@ -32,6 +33,18 @@ import * as process from 'node:process'
 //      })
 //  }
 //}
+async function readImageFile(filePath: string): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        reject(`Fehler beim Lesen der Datei: ${err.message}`)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
 export async function uploader(
   hostingUrl: string,
   apiKey: string,
@@ -39,10 +52,16 @@ export async function uploader(
 ): Promise<void> {
   for (const path of paths) {
     // insert HTTP request function here
-
     const appPath = process.cwd()
     console.log('App Path: ', appPath)
-    const filePath = appPath + '/' + path
+    const imageFilePath: string = appPath + '/' + path
+    readImageFile(imageFilePath)
+      .then(data => {
+        console.log('Bild erfolgreich ausgelesen! Größe:', data.length)
+      })
+      .catch(error => {
+        console.error('Fehler:', error)
+      })
     //const fileStream = fs.createReadStream(filePath)
     //const image =  fs.readFile(
     //  filePath,
@@ -50,24 +69,23 @@ export async function uploader(
     //    if (err) throw err
     //    console.log('File: ', data)
     //  })
-    const data = new FormData()
-    //@ts-expect-error: testing
-    data.append('source', fs.readFile(filePath))
-    console.log('Body: ', data)
-    console.log('URL: ', hostingUrl)
-    console.log('Path: ', path)
-    fetch(hostingUrl, {
-      method: 'POST',
-      headers: {
-        'X-API-Key': apiKey
-      },
-      body: data
-    }).then(response => {
-      response.json().then(result => {
-        core.summary.addImage(result.url, result.name).write()
-        console.log('Result: ', result)
-      })
-    })
+    //const data = new FormData()
+    //data.append('source', fs.readFile(filePath))
+    //console.log('Body: ', data)
+    //console.log('URL: ', hostingUrl)
+    //console.log('Path: ', path)
+    //fetch(hostingUrl, {
+    //  method: 'POST',
+    //  headers: {
+    //    'X-API-Key': apiKey
+    //  },
+    //  body: data
+    //}).then(response => {
+    //  response.json().then(result => {
+    //    core.summary.addImage(result.url, result.name).write()
+    //    console.log('Result: ', result)
+    //  })
+    //})
     //const request = new Request(hostingUrl, {
     //  method: 'POST',
     //  headers: {

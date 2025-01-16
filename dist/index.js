@@ -29669,11 +29669,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.uploader = uploader;
-const core = __importStar(__nccwpck_require__(2186));
+//import * as core from '@actions/core'
 //import { v2 as cloudinary } from 'cloudinary'
 //import * as path from 'path'
 const fs = __importStar(__nccwpck_require__(7147));
 const process = __importStar(__nccwpck_require__(7742));
+//import * as buffer from 'node:buffer'
 //export async function uploader(
 //  cloudName: string | undefined,
 //  apiKey: string | undefined,
@@ -29702,12 +29703,31 @@ const process = __importStar(__nccwpck_require__(7742));
 //      })
 //  }
 //}
+async function readImageFile(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                reject(`Fehler beim Lesen der Datei: ${err.message}`);
+            }
+            else {
+                resolve(data);
+            }
+        });
+    });
+}
 async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
         const appPath = process.cwd();
         console.log('App Path: ', appPath);
-        const filePath = appPath + '/' + path;
+        const imageFilePath = appPath + '/' + path;
+        readImageFile(imageFilePath)
+            .then(data => {
+            console.log('Bild erfolgreich ausgelesen! Größe:', data.length);
+        })
+            .catch(error => {
+            console.error('Fehler:', error);
+        });
         //const fileStream = fs.createReadStream(filePath)
         //const image =  fs.readFile(
         //  filePath,
@@ -29715,24 +29735,23 @@ async function uploader(hostingUrl, apiKey, paths) {
         //    if (err) throw err
         //    console.log('File: ', data)
         //  })
-        const data = new FormData();
-        //@ts-expect-error: testing
-        data.append('source', fs.readFile(filePath));
-        console.log('Body: ', data);
-        console.log('URL: ', hostingUrl);
-        console.log('Path: ', path);
-        fetch(hostingUrl, {
-            method: 'POST',
-            headers: {
-                'X-API-Key': apiKey
-            },
-            body: data
-        }).then(response => {
-            response.json().then(result => {
-                core.summary.addImage(result.url, result.name).write();
-                console.log('Result: ', result);
-            });
-        });
+        //const data = new FormData()
+        //data.append('source', fs.readFile(filePath))
+        //console.log('Body: ', data)
+        //console.log('URL: ', hostingUrl)
+        //console.log('Path: ', path)
+        //fetch(hostingUrl, {
+        //  method: 'POST',
+        //  headers: {
+        //    'X-API-Key': apiKey
+        //  },
+        //  body: data
+        //}).then(response => {
+        //  response.json().then(result => {
+        //    core.summary.addImage(result.url, result.name).write()
+        //    console.log('Result: ', result)
+        //  })
+        //})
         //const request = new Request(hostingUrl, {
         //  method: 'POST',
         //  headers: {
