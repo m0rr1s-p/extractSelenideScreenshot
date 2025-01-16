@@ -32,7 +32,6 @@ import * as process from 'node:process'
 //      })
 //  }
 //}
-
 export async function uploader(
   hostingUrl: string,
   apiKey: string,
@@ -44,10 +43,16 @@ export async function uploader(
     const appPath = process.cwd()
     console.log('App Path: ', appPath)
     const filePath = appPath + '/' + path
-    const fileStream = fs.createReadStream(filePath)
+    //const fileStream = fs.createReadStream(filePath)
+    //const image =  fs.readFile(
+    //  filePath,
+    //  (err, data) => {
+    //    if (err) throw err
+    //    console.log('File: ', data)
+    //  })
     const data = new FormData()
-    // @ts-expect-error: testing
-    data.append('source', fileStream)
+    //@ts-expect-error: testing
+    data.append('source', fs.readFile(filePath))
     console.log('Body: ', data)
     console.log('URL: ', hostingUrl)
     console.log('Path: ', path)
