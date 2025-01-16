@@ -29256,23 +29256,36 @@ function getImage(data, hostingUrl, apiKey) {
                 throw err;
             console.log(`Saved as ${imageName}`);
         });
-        const formData = new FormData();
-        formData.append('source', base64Image);
-        fetch(hostingUrl, {
-            method: 'POST',
-            headers: {
-                'X-API-Key': apiKey
-            },
-            body: formData
-        }).then(response => {
-            response.json().then(result => {
-                console.log('Result: ', result);
-                console.log('URL: ', result?.image?.url);
-                console.log('Name: ', result?.image?.name);
-                core.summary.addImage(result?.image?.url, result?.image?.name).write();
-            });
-        });
+        uploadImage(base64Image, hostingUrl, apiKey);
+        //const formData = new FormData()
+        //formData.append('source', base64Image)
+        //fetch(hostingUrl, {
+        //  method: 'POST',
+        //  headers: {
+        //    'X-API-Key': apiKey
+        //  },
+        //  body: formData
+        //}).then(response => {
+        //  response.json().then(result => {
+        //    console.log('Result: ', result)
+        //    console.log('URL: ', result?.image?.url)
+        //    console.log('Name: ', result?.image?.name)
+        //    core.summary.addImage(result?.image?.url, result?.image?.name).write()
+        //  })
+        //})
     }
+}
+async function uploadImage(base64Image, hostingUrl, apiKey) {
+    const formData = new FormData();
+    formData.append('source', base64Image);
+    const response = await fetch(hostingUrl, {
+        method: 'POST',
+        headers: {
+            'X-API-Key': apiKey
+        },
+        body: formData
+    });
+    console.log(response);
 }
 
 
