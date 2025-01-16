@@ -29704,11 +29704,11 @@ const fs = __importStar(__nccwpck_require__(7147));
 async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
+        const fileStream = fs.createReadStream(path);
+        console.log('File: ', fileStream);
         const data = new FormData();
-        const file = fs.readFileSync(path);
-        console.log('File: ', file);
-        //@ts-expect-error: testing
-        data.append('source', file);
+        // @ts-expect-error: testing
+        data.append('source', fileStream);
         console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);
