@@ -76,16 +76,16 @@ export async function uploader(
       body: data
     })
     console.log('Request: ', request.body)
-    //try {
-    //  const response = await fetch(request)
-    //  const result = await response.json()
-    //  console.log('Result: ', result)
-    //  await core.summary
-    //    .addHeading('Selenide Screenshots', '2')
-    //    .addImage(result.url, result.name)
-    //    .write()
-    //} catch (error) {
-    //  console.error('Error: ', error)
-    //}
+    try {
+      const response = await fetch(request)
+      const result = await response.json()
+      console.log('Result: ', result)
+      await core.summary
+        .addHeading('Selenide Screenshots', '2')
+        .addImage(result.url, result.name)
+        .write()
+    } catch (error) {
+      console.error('Error: ', error)
+    }
   }
 }
