@@ -29705,8 +29705,10 @@ async function uploader(hostingUrl, apiKey, paths) {
     for (const path of paths) {
         // insert HTTP request function here
         const data = new FormData();
-        // @ts-expect-error: keine ahnung
-        data.append('source', fs.createReadStream(path));
+        const file = fs.readFileSync(path);
+        console.log('File: ', file);
+        //@ts-expect-error: testing
+        data.append('source', file);
         console.log('Body: ', data);
         console.log('URL: ', hostingUrl);
         console.log('Path: ', path);
