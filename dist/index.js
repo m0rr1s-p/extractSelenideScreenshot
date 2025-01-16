@@ -29306,7 +29306,7 @@ async function uploadImage(base64Image, hostingUrl, apiKey) {
         body: formData
     };
     await fetch(hostingUrl, requestOptions)
-        .then(async (response) => response.text())
+        .then(async (response) => response.json())
         .then(result => console.log(result))
         .catch(error => console.error(error));
 }
