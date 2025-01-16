@@ -67,6 +67,7 @@ async function uploadImage(
 ): Promise<void> {
   const formData = new FormData()
   formData.append('source', base64Image)
+  console.log('FormData: ', formData)
   const response = await fetch(hostingUrl, {
     method: 'POST',
     headers: {

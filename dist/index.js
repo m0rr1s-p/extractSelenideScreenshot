@@ -29278,6 +29278,7 @@ function getImage(data, hostingUrl, apiKey) {
 async function uploadImage(base64Image, hostingUrl, apiKey) {
     const formData = new FormData();
     formData.append('source', base64Image);
+    console.log('FormData: ', formData);
     const response = await fetch(hostingUrl, {
         method: 'POST',
         headers: {
