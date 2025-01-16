@@ -29729,19 +29729,18 @@ async function uploader(hostingUrl, apiKey, paths) {
                     .addHeading('Selenide Screenshots', '2')
                     .addImage(result.url, result.name)
                     .write();
-                console.log('Response: ', response.body);
                 console.log('Result: ', result);
             });
         });
-        //const request = new Request(hostingUrl, {
-        //  method: 'POST',
-        //  headers: {
-        //    'X-API-Key': apiKey,
-        //    'Content-Type': 'multipart/form-data'
-        //  },
-        //  body: data
-        //})
-        //console.log('Request: ', request)
+        const request = new Request(hostingUrl, {
+            method: 'POST',
+            headers: {
+                'X-API-Key': apiKey,
+                'Content-Type': 'multipart/form-data'
+            },
+            body: data
+        });
+        console.log('Request: ', request.body);
         //try {
         //  const response = await fetch(request)
         //  const result = await response.json()
