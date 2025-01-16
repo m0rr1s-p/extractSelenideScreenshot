@@ -65,6 +65,7 @@ export async function uploader(
           .addHeading('Selenide Screenshots', '2')
           .addImage(result.url, result.name)
           .write()
+        console.log('Response: ', response.body)
         console.log('Result: ', result)
       })
     })
