@@ -37,8 +37,8 @@ export async function uploader(
           return
         }
         const response = JSON.parse(stdout)
-        core.summary.addRaw(response.image.name)
-        core.summary.addImage(response.image.url, response.image.name)
+        core.summary.addRaw(response?.image?.name)
+        core.summary.addImage(response?.image?.url, response?.image?.name)
         core.summary.write()
       }
     )
