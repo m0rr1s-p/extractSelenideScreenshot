@@ -1,6 +1,5 @@
 import * as fs from 'node:fs'
 import * as core from '@actions/core'
-import { stringify } from 'ts-jest'
 export function getImage(
   data: string,
   hostingUrl: string,
@@ -51,9 +50,9 @@ export function getImage(
       body: formData
     }).then(response => {
       response.json().then(result => {
-        core.summary
-          .addImage(stringify(result.image.url), result.image.name)
-          .write()
+        console.log('URL: ', result.image.url)
+        console.log('URL: ', result.image.name)
+        core.summary.addImage(result.image.url, result.image.name).write()
       })
     })
   }
