@@ -29266,7 +29266,7 @@ function getImage(data, hostingUrl, apiKey) {
             body: formData
         }).then(response => {
             response.json().then(result => {
-                console.log('URL: ', result.image.url);
+                console.log('URL: ', result.image['url']);
                 console.log('Name: ', result.image.original_name);
                 core.summary
                     .addImage(result.image['url'], result.image.original_name)
