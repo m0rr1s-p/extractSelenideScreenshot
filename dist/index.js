@@ -29266,13 +29266,11 @@ function getImage(data, hostingUrl, apiKey) {
             body: formData
         }).then(response => {
             response.json().then(result => {
-                const imageRespone = result.image;
-                console.log(imageRespone.url);
-                //console.log('URL: ', result.image['url'])
-                //console.log('Name: ', result.image.original_name)
-                //core.summary
-                //  .addImage(result.image['url'], result.image.original_name)
-                //  .write()
+                console.log('URL: ', result?.image?.url);
+                console.log('Name: ', result.image.original_name);
+                core.summary
+                    .addImage(result?.image?.url, result.image.original_name)
+                    .write();
             });
         });
     }
