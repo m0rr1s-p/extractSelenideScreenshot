@@ -48,10 +48,10 @@ export function getImage(
         'X-API-Key': apiKey
       },
       body: formData
-    }).then(response => {
-      response.json().then(result => {
-        core.summary.addImage(result.image.url, result.image.name).write()
-      })
+      // }).then(response => {
+      //   response.json().then(result => {
+      //     core.summary.addImage(result.image.url, result.image.name).write()
+      //   })
     })
   }
 }
