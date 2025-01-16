@@ -51,7 +51,6 @@ export function getImage(
     }).then(response => {
       response.json().then(result => {
         core.summary.addImage(result.image.url, result.image.name).write()
-        console.log('Result: ', result)
       })
     })
   }
