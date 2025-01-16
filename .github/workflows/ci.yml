@@ -61,7 +61,6 @@ jobs:
       - name: RUN ID
         run: echo "${{ github.run_id }}"
       - name: Test Local Action
-        id: test-action
         uses: ./
         with:
           gh-token: ${{ secrets.GH_TOKEN }}
@@ -73,7 +72,6 @@ jobs:
           api-key: ${{ secrets.CHEVERETO_API_KEY }}
           images: './*.png'
       - name: Test Remote Action
-        id: test-action
         uses: ./
         with:
           gh-token: ${{ secrets.GH_TOKEN }}
