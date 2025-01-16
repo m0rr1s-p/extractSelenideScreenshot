@@ -70,4 +70,3 @@ jobs:
           repo-owner: 'm0rr1s-p'
           hosting-url: 'http://images.sanctum.mineral-minds.net/api/1/upload'
           api-key: ${{ secrets.CHEVERETO_API_KEY }}
-          images: './*.png'
