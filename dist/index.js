@@ -29264,10 +29264,12 @@ function getImage(data, hostingUrl, apiKey) {
                 'X-API-Key': apiKey
             },
             body: formData
-            // }).then(response => {
-            //   response.json().then(result => {
-            //     core.summary.addImage(result.image.url, result.image.name).write()
-            //   })
+        }).then(response => {
+            response.json().then(result => {
+                const url = result.image.url;
+                const name = result.image.name;
+                core.summary.addImage(url, name).write();
+            });
         });
     }
 }
