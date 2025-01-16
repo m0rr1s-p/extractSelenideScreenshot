@@ -47,45 +47,41 @@ export async function uploader(
     const fileStream = fs.createReadStream(filePath)
     const data = new FormData()
     // @ts-expect-error: testing
-    data.append('file', fileStream)
+    data.append('source', fileStream)
     console.log('Body: ', data)
     console.log('URL: ', hostingUrl)
     console.log('Path: ', path)
     fetch(hostingUrl, {
       method: 'POST',
       headers: {
-        'X-API-Key': apiKey,
-        'Content-Type': 'multipart/form-data'
+        'X-API-Key': apiKey
       },
       body: data
     }).then(response => {
       response.json().then(result => {
-        core.summary
-          .addHeading('Selenide Screenshots', '2')
-          .addImage(result.url, result.name)
-          .write()
+        core.summary.addImage(result.url, result.name).write()
         console.log('Result: ', result)
       })
     })
-    const request = new Request(hostingUrl, {
-      method: 'POST',
-      headers: {
-        'X-API-Key': apiKey,
-        'Content-Type': 'multipart/form-data'
-      },
-      body: data
-    })
-    console.log('Request: ', request.body)
-    try {
-      const response = await fetch(request)
-      const result = await response.json()
-      console.log('Result: ', result)
-      await core.summary
-        .addHeading('Selenide Screenshots', '2')
-        .addImage(result.url, result.name)
-        .write()
-    } catch (error) {
-      console.error('Error: ', error)
-    }
+    //const request = new Request(hostingUrl, {
+    //  method: 'POST',
+    //  headers: {
+    //    'X-API-Key': apiKey,
+    //    'Content-Type': 'multipart/form-data'
+    //  },
+    //  body: data
+    //})
+    //console.log('Request: ', request.body)
+    //try {
+    //  const response = await fetch(request)
+    //  const result = await response.json()
+    //  console.log('Result: ', result)
+    //  await core.summary
+    //    .addHeading('Selenide Screenshots', '2')
+    //    .addImage(result.url, result.name)
+    //    .write()
+    //} catch (error) {
+    //  console.error('Error: ', error)
+    //}
   }
 }
