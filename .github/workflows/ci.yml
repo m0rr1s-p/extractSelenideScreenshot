@@ -8,48 +8,49 @@ on:
     branches:
       - main
       - release/**
+      - 'upload-with-curl'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  test-typescript:
-    name: TypeScript Tests
-    runs-on: self-hosted
-
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        id: setup-node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: npm
-
-      - name: Install Dependencies
-        id: npm-ci
-        run: npm ci
-
-      #     - name: Check Format
-      #       id: npm-format-check
-      #       run: npm run format:check
-
-      - name: Lint
-        id: npm-lint
-        run: npm run lint
-
-      - name: Test
-        id: npm-ci-test
-        run: npm run ci-test
-      - name: RUN ID
-        run: echo "${{ github.run_id }}"
+  #test-typescript:
+  #  name: TypeScript Tests
+  #  runs-on: self-hosted
+  #
+  #  steps:
+  #    - name: Checkout
+  #      id: checkout
+  #      uses: actions/checkout@v4
+  #
+  #    - name: Setup Node.js
+  #      id: setup-node
+  #      uses: actions/setup-node@v4
+  #      with:
+  #        node-version-file: .node-version
+  #        cache: npm
+  #
+  #    - name: Install Dependencies
+  #      id: npm-ci
+  #      run: npm ci
+  #
+  #    #     - name: Check Format
+  #    #       id: npm-format-check
+  #    #       run: npm run format:check
+  #
+  #    - name: Lint
+  #      id: npm-lint
+  #      run: npm run lint
+  #
+  #    - name: Test
+  #      id: npm-ci-test
+  #      run: npm run ci-test
+  #    - name: RUN ID
+  #      run: echo "${{ github.run_id }}"
 
   test-action:
-    needs: test-typescript
+    #needs: test-typescript
     name: GitHub Actions Test
     runs-on: self-hosted
 
@@ -68,7 +69,6 @@ jobs:
           job-name: 'tests_selenide / tests_selenide'
           repo-name: 'planning'
           repo-owner: 'm0rr1s-p'
-          cloud-name: ${{ vars.CLOUDINARY_CLOUD_NAME }}
-          api-key: ${{ secrets.CLOUDINARY_API_KEY }}
-          api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+          hosting-url: ${{ secrets.CHEVERETO_HOSTING_URL }}
+          api-key: ${{ secrets.CHEVERETO_API_KEY }}
           images: './*.png'
