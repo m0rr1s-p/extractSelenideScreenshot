@@ -1,5 +1,6 @@
 import * as fs from 'node:fs'
 import * as core from '@actions/core'
+import { SummaryTableRow } from '@actions/core/lib/summary'
 //import { SummaryTableCell } from '@actions/core/lib/summary'
 
 // extract images
@@ -19,6 +20,7 @@ export function getImage(data: string): void {
     }
     return indices
   }
+
   // get the end index of the base64 string
   function getEndOf(startIndex: number, offset: number): number {
     const sub = data.substring(startIndex)
@@ -30,8 +32,14 @@ export function getImage(data: string): void {
       startIndex
     )
   }
+
   const indicesImages = getIndicesOf('Screenshot:', data)
   const indicesTest = getIndicesOf('Test Failed for test', data)
+  const tableData: SummaryTableRow[] | { data: string }[][] = []
+  tableData.push([
+    { data: 'Screenshot Name', header: true },
+    { data: 'Test Name', header: true }
+  ])
   //for (const index of indicesImages)
   indicesImages.forEach((indexOfImage, index) => {
     // the offset of 42 is not only the answer to everything but also the length of the timestamp
@@ -50,14 +58,7 @@ export function getImage(data: string): void {
       if (err) throw err
       console.log(`Saved as ${imageName}`)
     })
-    const tableData = [
-      { data: 'Header1', header: true },
-      { data: 'Header2', header: true },
-      { data: 'Header3', header: true },
-      { data: imageName },
-      { data: testName },
-      { data: 'MyData3' }
-    ]
-    core.summary.addTable([tableData])
+    tableData.push([{ data: imageName }, { data: testName }])
+    core.summary.addTable(tableData)
   })
 }

@@ -29530,6 +29530,11 @@ function getImage(data) {
     }
     const indicesImages = getIndicesOf('Screenshot:', data);
     const indicesTest = getIndicesOf('Test Failed for test', data);
+    const tableData = [];
+    tableData.push([
+        { data: 'Screenshot Name', header: true },
+        { data: 'Test Name', header: true }
+    ]);
     //for (const index of indicesImages)
     indicesImages.forEach((indexOfImage, index) => {
         // the offset of 42 is not only the answer to everything but also the length of the timestamp
@@ -29543,15 +29548,8 @@ function getImage(data) {
                 throw err;
             console.log(`Saved as ${imageName}`);
         });
-        const tableData = [
-            { data: 'Header1', header: true },
-            { data: 'Header2', header: true },
-            { data: 'Header3', header: true },
-            { data: imageName },
-            { data: testName },
-            { data: 'MyData3' }
-        ];
-        core.summary.addTable([tableData]);
+        tableData.push([{ data: imageName }, { data: testName }]);
+        core.summary.addTable(tableData);
     });
 }
 
