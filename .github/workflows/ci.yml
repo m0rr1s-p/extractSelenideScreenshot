@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-      - release/**
+      - 'release/**'
       - 'upload-with-curl'
   workflow_dispatch:
 
