@@ -29550,6 +29550,7 @@ function getImage(data) {
         tableData.push([{ data: imageName }, { data: testName }]);
     });
     core.summary.addTable(tableData);
+    core.summary.write();
 }
 
 
@@ -29642,7 +29643,7 @@ async function run() {
         else {
             paths = glob_1.glob.sync(imagesPath);
         }
-        (0, upload_1.uploader)(hostingUrl, apiKey, paths);
+        await (0, upload_1.uploader)(hostingUrl, apiKey, paths);
     }
     catch (error) {
         // Fail the workflow run if an error occurs
@@ -29699,8 +29700,8 @@ async function uploader(hostingUrl, apiKey, paths) {
                 return;
             }
             const response = JSON.parse(stdout);
-            core.summary.addRaw(response?.image?.name);
-            core.summary.addImage(response?.image?.url, response?.image?.name);
+            core.summary.addRaw(response?.image?.title);
+            core.summary.addImage(response?.image?.url, response?.image?.title);
             core.summary.write();
         });
     }

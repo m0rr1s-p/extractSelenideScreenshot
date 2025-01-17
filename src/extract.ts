@@ -61,4 +61,5 @@ export function getImage(data: string): void {
     tableData.push([{ data: imageName }, { data: testName }])
   })
   core.summary.addTable(tableData)
+  core.summary.write()
 }

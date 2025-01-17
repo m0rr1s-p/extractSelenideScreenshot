@@ -67,7 +67,7 @@ export async function run(): Promise<void> {
       paths = glob.sync(imagesPath)
     }
 
-    uploader(hostingUrl, apiKey, paths)
+    await uploader(hostingUrl, apiKey, paths)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
