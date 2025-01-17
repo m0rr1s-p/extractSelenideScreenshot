@@ -53,7 +53,7 @@ export async function run(): Promise<void> {
         owner: repoOwner,
         repo: repoName
       })
-
+    core.summary.addHeading('Selenide Screenshots', '2')
     getImage(String(workflowLogs.data))
 
     const hostingUrl: string | undefined = core.getInput('hosting-url')

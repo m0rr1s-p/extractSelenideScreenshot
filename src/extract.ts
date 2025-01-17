@@ -1,5 +1,10 @@
 import * as fs from 'node:fs'
+import * as core from '@actions/core'
+//import { SummaryTableCell } from '@actions/core/lib/summary'
+
+// extract images
 export function getImage(data: string): void {
+  // get the start index of search string in the log
   function getIndicesOf(searchStr: string, str: string): number[] {
     const searchStrLen = searchStr.length
     if (searchStrLen == 0) {
@@ -14,25 +19,43 @@ export function getImage(data: string): void {
     }
     return indices
   }
-  function getEndOf(startIndex: number): number {
+  // get the end index of the base64 string
+  function getEndOf(startIndex: number, offset: number): number {
     const sub = data.substring(startIndex)
     return (
       sub.indexOf(
         '[main] INFO  c.m.s.s.TestResultLoggerExtension - ------------------------------------------------------------------------------------'
       ) -
-      42 +
+      offset +
       startIndex
     )
   }
-  const indices = getIndicesOf('Screenshot:', data)
-  for (const index of indices) {
-    const base64Image = data.substring(index + 103, getEndOf(index))
+  const indicesImages = getIndicesOf('Screenshot:', data)
+  const indicesTest = getIndicesOf('Test Failed for test', data)
+  //for (const index of indicesImages)
+  indicesImages.forEach((indexOfImage, index) => {
+    // the offset of 42 is not only the answer to everything but also the length of the timestamp
+    const base64Image = data.substring(
+      indexOfImage + 103,
+      getEndOf(indexOfImage, 42)
+    )
+    const testName = data.substring(
+      indicesTest[index],
+      getEndOf(indicesTest[index], 42)
+    )
     //console.log(base64Image)
-    const imageName = `screenshot${index}.png`
+    const imageName = `screenshot${indexOfImage}.png`
     const buf = Buffer.from(base64Image, 'base64')
     fs.writeFile(imageName, buf, function (err) {
       if (err) throw err
       console.log(`Saved as ${imageName}`)
     })
-  }
+    const tableData = [
+      { data: 'Screenshot Name', header: true },
+      { data: 'Test Name', header: true },
+      { data: imageName },
+      { data: testName }
+    ]
+    core.summary.addTable([tableData])
+  })
 }

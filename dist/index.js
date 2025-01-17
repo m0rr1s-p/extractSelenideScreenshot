@@ -29503,7 +29503,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImage = getImage;
 const fs = __importStar(__nccwpck_require__(7561));
+const core = __importStar(__nccwpck_require__(2186));
+//import { SummaryTableCell } from '@actions/core/lib/summary'
+// extract images
 function getImage(data) {
+    // get the start index of search string in the log
     function getIndicesOf(searchStr, str) {
         const searchStrLen = searchStr.length;
         if (searchStrLen == 0) {
@@ -29517,24 +29521,36 @@ function getImage(data) {
         }
         return indices;
     }
-    function getEndOf(startIndex) {
+    // get the end index of the base64 string
+    function getEndOf(startIndex, offset) {
         const sub = data.substring(startIndex);
         return (sub.indexOf('[main] INFO  c.m.s.s.TestResultLoggerExtension - ------------------------------------------------------------------------------------') -
-            42 +
+            offset +
             startIndex);
     }
-    const indices = getIndicesOf('Screenshot:', data);
-    for (const index of indices) {
-        const base64Image = data.substring(index + 103, getEndOf(index));
+    const indicesImages = getIndicesOf('Screenshot:', data);
+    const indicesTest = getIndicesOf('Test Failed for test', data);
+    //for (const index of indicesImages)
+    indicesImages.forEach((indexOfImage, index) => {
+        // the offset of 42 is not only the answer to everything but also the length of the timestamp
+        const base64Image = data.substring(indexOfImage + 103, getEndOf(indexOfImage, 42));
+        const testName = data.substring(indicesTest[index], getEndOf(indicesTest[index], 42));
         //console.log(base64Image)
-        const imageName = `screenshot${index}.png`;
+        const imageName = `screenshot${indexOfImage}.png`;
         const buf = Buffer.from(base64Image, 'base64');
         fs.writeFile(imageName, buf, function (err) {
             if (err)
                 throw err;
             console.log(`Saved as ${imageName}`);
         });
-    }
+        const tableData = [
+            { data: 'Screenshot Name', header: true },
+            { data: 'Test Name', header: true },
+            { data: imageName },
+            { data: testName }
+        ];
+        core.summary.addTable([tableData]);
+    });
 }
 
 
@@ -29615,6 +29631,7 @@ async function run() {
             owner: repoOwner,
             repo: repoName
         });
+        core.summary.addHeading('Selenide Screenshots', '2');
         (0, extract_1.getImage)(String(workflowLogs.data));
         const hostingUrl = core.getInput('hosting-url');
         const apiKey = core.getInput('api-key');
@@ -29670,24 +29687,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.uploader = uploader;
 const core = __importStar(__nccwpck_require__(2186));
 const child_process = __importStar(__nccwpck_require__(2081));
-//import * as path from 'path'
-//export async function uploader(
-//  hostingUrl: string | undefined,
-//  apiKey: string | undefined,
-//  paths: string[]
-//): Promise<void> {
-//  cloudinary.config({
-//    cloud_name: cloudName,
-//    api_key: apiKey,
-//    api_secret: apiSecret
-//  })
-//  for (const path of paths) {
-//    const { exec } = require('child_process');
-//    exec(`curl --fail-with-body -X POST -H "X-API-Key: $\{api_key}" -F "source=@$\{path}" ${hostingUrl}`)
-//  }
-//}
 async function uploader(hostingUrl, apiKey, paths) {
-    core.summary.addHeading('Selenide Screenshots', '2');
     for (const path of paths) {
         await new Promise(r => setTimeout(r, 2000));
         child_process.exec(`curl -s --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" -F "expiration=P7D" ${hostingUrl}`, (error, stdout, stderr) => {
