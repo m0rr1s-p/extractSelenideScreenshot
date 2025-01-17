@@ -23,9 +23,9 @@ with:
   run-id: ${{ github.run_id }}
   job-name: 'test_selenide'
   repo-name: ${{ github.repository }}
-  cloud-name: ${{ vars.CLOUDINARY_CLOUD_NAME }}
-  api-key: ${{ secret.CLOUDINARY_API_KEY }}
-  api-secret: ${{ secret.CLOUDINARY_API_SECRET }}
+  hosting-url: ${{ vars.CHEVERETO_HOSTING_URL }}
+  api-key: ${{ secret.CHEVERETO_API_KEY }}
+
   images: './*.png'
 ```
 
