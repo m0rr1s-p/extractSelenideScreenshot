@@ -23,24 +23,24 @@ with:
   run-id: ${{ github.run_id }}
   job-name: 'test_selenide'
   repo-name: ${{ github.repository }}
-  cloud-name: ${{ vars.CLOUDINARY_CLOUD_NAME }}
-  api-key: ${{ secret.CLOUDINARY_API_KEY }}
-  api-secret: ${{ secret.CLOUDINARY_API_SECRET }}
+  hosting-url: ${{ vars.CHEVERETO_HOSTING_URL }}
+  api-key: ${{ secret.CHEVERETO_API_KEY }}
+
   images: './*.png'
 ```
 
 ## Inputs
 
-| Input      | Description                                                    |
-| ---------- | -------------------------------------------------------------- |
-| gh-token   | Personal Access Token for accessing the workflow run logs      |
-| run-id     | The run ID of the job you want to extract the screenshots from |
-| job-name   | The name of the job which creates the logs                     |
-| repo-name  | The name of the repository where the workflow job runs         |
-| images     | The pattern for the image files you want to upload             |
-| cloud-name | The name of your Cloudinary instance                           |
-| api-key    | Your Cloudinary API key                                        |
-| api-secret | Your Cloudinary API secret                                     |
+| Input       | Description                                                    |
+|-------------|----------------------------------------------------------------|
+| gh-token    | Personal Access Token for accessing the workflow run logs      |
+| run-id      | The run ID of the job you want to extract the screenshots from |
+| job-name    | The name of the job which creates the logs                     |
+| repo-name   | The name of the repository where the workflow job runs         |
+| images      | The pattern for the image files you want to upload             |
+| hosting-url | The URL of your Chevereto instance                             |
+| api-key     | Your Chevereto API key                                         |
+
 
 ## Outputs
 

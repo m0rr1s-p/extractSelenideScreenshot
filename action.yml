@@ -28,18 +28,14 @@ inputs:
     required: false
     description: 'Repo name'
     default: ${{ github.repository }}
-  cloud-name:
-    description: 'Cloudinary account name'
-    required: false
-    default: '<name>'
+  hosting-url:
+    description: 'Chevereto Url'
+    required: true
+    default: '<url>'
   api-key:
-    description: 'Cloudinary API Key'
-    required: false
+    description: 'Chevereto API Key'
+    required: true
     default: '<api-key>'
-  api-secret:
-    description: 'Cloudinary API Secret Key'
-    required: false
-    default: '<api-secret>'
   images:
     description: 'Pattern or array of images path to upload'
     required: false

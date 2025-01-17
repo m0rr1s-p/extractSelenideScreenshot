@@ -1,32 +1,29 @@
 import * as core from '@actions/core'
-import { v2 as cloudinary } from 'cloudinary'
-//import * as path from 'path'
+import * as child_process from 'child_process'
 
 export async function uploader(
-  cloudName: string | undefined,
+  hostingUrl: string | undefined,
   apiKey: string | undefined,
-  apiSecret: string | undefined,
   paths: string[]
 ): Promise<void> {
-  cloudinary.config({
-    cloud_name: cloudName,
-    api_key: apiKey,
-    api_secret: apiSecret
-  })
   for (const path of paths) {
-    cloudinary.uploader
-      .upload(path, {
-        use_filename: true,
-        overwrite: true
-      })
-      .then(result => {
-        core.summary
-          .addHeading('Selenide Screenshots', '2')
-          .addImage(result.secure_url, result.public_id)
-          .write()
-        core.info(
-          `Uploaded ${result.secure_url} as ${result.public_id} to Cloudinary`
-        )
-      })
+    await new Promise(r => setTimeout(r, 2000))
+    child_process.exec(
+      `curl -s --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" -F "expiration=P7D" ${hostingUrl}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`exec error: ${error}`)
+          return
+        }
+        if (stderr) {
+          console.error(`stderr: ${stderr}`)
+          return
+        }
+        const response = JSON.parse(stdout)
+        core.summary.addRaw(response?.image?.title)
+        core.summary.addImage(response?.image?.url, response?.image?.title)
+        core.summary.write()
+      }
+    )
   }
 }

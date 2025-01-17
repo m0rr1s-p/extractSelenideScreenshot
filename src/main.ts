@@ -53,15 +53,11 @@ export async function run(): Promise<void> {
         owner: repoOwner,
         repo: repoName
       })
-
+    core.summary.addHeading('Selenide Screenshots', '2')
     getImage(String(workflowLogs.data))
 
-    const cloudName: string | undefined =
-      core.getInput('cloud-name') || process.env.CLOUDINARY_CLOUD_NAME
-    const apiKey: string | undefined =
-      core.getInput('api-key') || process.env.CLOUDINARY_API_KEY
-    const apiSecret: string | undefined =
-      core.getInput('api-secret') || process.env.CLOUDINARY_API_SECRET
+    const hostingUrl: string | undefined = core.getInput('hosting-url')
+    const apiKey: string | undefined = core.getInput('api-key')
     const imagesPath = core.getInput('images')
 
     let paths: string[]
@@ -71,7 +67,7 @@ export async function run(): Promise<void> {
       paths = glob.sync(imagesPath)
     }
 
-    await uploader(cloudName, apiKey, apiSecret, paths)
+    await uploader(hostingUrl, apiKey, paths)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
