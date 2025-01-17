@@ -29504,7 +29504,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImage = getImage;
 const fs = __importStar(__nccwpck_require__(7561));
 const core = __importStar(__nccwpck_require__(2186));
-//import { SummaryTableCell } from '@actions/core/lib/summary'
+const tableData = [];
+tableData.push([
+    { data: 'Screenshot', header: true },
+    { data: 'Test', header: true }
+]);
 // extract images
 function getImage(data) {
     // get the start index of search string in the log
@@ -29530,11 +29534,6 @@ function getImage(data) {
     }
     const indicesImages = getIndicesOf('Screenshot:', data);
     const indicesTest = getIndicesOf('Test Failed for test', data);
-    const tableData = [];
-    tableData.push([
-        { data: 'Screenshot Name', header: true },
-        { data: 'Test Name', header: true }
-    ]);
     //for (const index of indicesImages)
     indicesImages.forEach((indexOfImage, index) => {
         // the offset of 42 is not only the answer to everything but also the length of the timestamp
@@ -29549,8 +29548,8 @@ function getImage(data) {
             console.log(`Saved as ${imageName}`);
         });
         tableData.push([{ data: imageName }, { data: testName }]);
-        core.summary.addTable(tableData);
     });
+    core.summary.addTable(tableData);
 }
 
 

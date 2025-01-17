@@ -1,8 +1,12 @@
 import * as fs from 'node:fs'
 import * as core from '@actions/core'
 import { SummaryTableRow } from '@actions/core/lib/summary'
-//import { SummaryTableCell } from '@actions/core/lib/summary'
 
+const tableData: SummaryTableRow[] | { data: string }[][] = []
+tableData.push([
+  { data: 'Screenshot', header: true },
+  { data: 'Test', header: true }
+])
 // extract images
 export function getImage(data: string): void {
   // get the start index of search string in the log
@@ -35,11 +39,7 @@ export function getImage(data: string): void {
 
   const indicesImages = getIndicesOf('Screenshot:', data)
   const indicesTest = getIndicesOf('Test Failed for test', data)
-  const tableData: SummaryTableRow[] | { data: string }[][] = []
-  tableData.push([
-    { data: 'Screenshot Name', header: true },
-    { data: 'Test Name', header: true }
-  ])
+
   //for (const index of indicesImages)
   indicesImages.forEach((indexOfImage, index) => {
     // the offset of 42 is not only the answer to everything but also the length of the timestamp
@@ -59,6 +59,6 @@ export function getImage(data: string): void {
       console.log(`Saved as ${imageName}`)
     })
     tableData.push([{ data: imageName }, { data: testName }])
-    core.summary.addTable(tableData)
   })
+  core.summary.addTable(tableData)
 }
