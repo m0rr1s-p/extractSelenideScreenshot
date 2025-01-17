@@ -29631,6 +29631,7 @@ async function run() {
             owner: repoOwner,
             repo: repoName
         });
+        core.debug('Log length: ' + String(workflowLogs.data).length);
         core.summary.addHeading('Selenide Screenshots', '2');
         (0, extract_1.getImage)(String(workflowLogs.data));
         const hostingUrl = core.getInput('hosting-url');

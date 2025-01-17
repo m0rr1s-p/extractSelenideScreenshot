@@ -32,7 +32,7 @@ with:
 ## Inputs
 
 | Input       | Description                                                    |
-|-------------|----------------------------------------------------------------|
+| ----------- | -------------------------------------------------------------- |
 | gh-token    | Personal Access Token for accessing the workflow run logs      |
 | run-id      | The run ID of the job you want to extract the screenshots from |
 | job-name    | The name of the job which creates the logs                     |
@@ -40,7 +40,6 @@ with:
 | images      | The pattern for the image files you want to upload             |
 | hosting-url | The URL of your Chevereto instance                             |
 | api-key     | Your Chevereto API key                                         |
-
 
 ## Outputs
 

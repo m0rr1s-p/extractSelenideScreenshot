@@ -53,6 +53,7 @@ export async function run(): Promise<void> {
         owner: repoOwner,
         repo: repoName
       })
+    core.debug('Log length: ' + String(workflowLogs.data).length)
     core.summary.addHeading('Selenide Screenshots', '2')
     getImage(String(workflowLogs.data))
 
