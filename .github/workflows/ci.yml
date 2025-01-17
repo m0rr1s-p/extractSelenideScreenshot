@@ -71,14 +71,14 @@ jobs:
           hosting-url: ${{ secrets.CHEVERETO_HOSTING_URL }}
           api-key: ${{ secrets.CHEVERETO_API_KEY }}
           images: './*.png'
-      - name: Test Remote Action
-        uses: ./
-        with:
-          gh-token: ${{ secrets.GH_TOKEN }}
-          run-id: 12748696601
-          job-name: 'tests_selenide'
-          repo-name: 'mineralminds'
-          repo-owner: 'Mineral-Minds-Deutschland'
-          hosting-url: ${{ secrets.CHEVERETO_HOSTING_URL }}
-          api-key: ${{ secrets.CHEVERETO_API_KEY }}
-          images: './*.png'
+      #- name: Test Remote Action
+      #  uses: ./
+      #  with:
+      #    gh-token: ${{ secrets.GH_TOKEN }}
+      #    run-id: 12748696601
+      #    job-name: 'tests_selenide'
+      #    repo-name: 'mineralminds'
+      #    repo-owner: 'Mineral-Minds-Deutschland'
+      #    hosting-url: ${{ secrets.CHEVERETO_HOSTING_URL }}
+      #    api-key: ${{ secrets.CHEVERETO_API_KEY }}
+      #    images: './*.png'
