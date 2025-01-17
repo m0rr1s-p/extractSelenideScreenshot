@@ -51,10 +51,12 @@ export function getImage(data: string): void {
       console.log(`Saved as ${imageName}`)
     })
     const tableData = [
-      { data: 'Screenshot Name', header: true },
-      { data: 'Test Name', header: true },
+      { data: 'Header1', header: true },
+      { data: 'Header2', header: true },
+      { data: 'Header3', header: true },
       { data: imageName },
-      { data: testName }
+      { data: testName },
+      { data: 'MyData3' }
     ]
     core.summary.addTable([tableData])
   })
