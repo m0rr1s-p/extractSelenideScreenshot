@@ -9,7 +9,7 @@ export async function uploader(
   for (const path of paths) {
     await new Promise(r => setTimeout(r, 2000))
     child_process.exec(
-      `curl -s --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" -F "expiration=P7D" ${hostingUrl}`,
+      `curl --fail-with-body -X POST -H "X-API-Key: ${apiKey}" -F "source=@${path}" -F "expiration=P7D" ${hostingUrl}`,
       (error, stdout, stderr) => {
         if (error) {
           console.error(`exec error: ${error}`)
