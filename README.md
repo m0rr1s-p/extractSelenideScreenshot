@@ -44,4 +44,4 @@ with:
 
 ## Outputs
 
-None. Just the step summary.
+None. Just the step summary. 
