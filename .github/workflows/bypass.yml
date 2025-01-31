@@ -11,7 +11,7 @@ env:
 
 jobs:
   bypass:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Load Secrets
         uses: Dashlane/load-secrets-action@v1.0.0
