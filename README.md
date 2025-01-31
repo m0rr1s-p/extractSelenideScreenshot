@@ -9,7 +9,7 @@
 
 This Action extracts base64 encoded images (screenshots) made by Selenide and
 converts them to PNG. After that the images are uploaded to
-[Cloudinary](https://cloudinary.com/), hence why you need an account there. Then
+a Chevereto instance, which can be hosted by yourself. Then
 the image will be added to the step summary with Markdown. The images will be
 saved in the working directory with the name "screenshot<index>.png".
 
