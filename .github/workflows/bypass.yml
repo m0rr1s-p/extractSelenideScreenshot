@@ -1,9 +1,9 @@
 name: bypass branch protection
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches:
+      - 'bypass-branch-rule'
 
 jobs:
   bypass:
@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           ssh-key: ${{ secrets.GH_DEPLOY_KEY }}
       - name: Git
         run: |
