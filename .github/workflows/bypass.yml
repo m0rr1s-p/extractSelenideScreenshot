@@ -23,4 +23,5 @@ jobs:
           git config user.name "automation-mm"
           git add ./README.md
           git commit -m "test"
-          git push origin main
+          git pull
+          git push origin ${{ github.ref_name }}:main
