@@ -21,5 +21,6 @@ jobs:
           echo "test-${{ github.run_id }}" >> README.md
           git config user.email "devops@mineral-minds.de"
           git config user.name "automation-mm"
+          git add ./README.md
           git commit -m "test"
           git push
