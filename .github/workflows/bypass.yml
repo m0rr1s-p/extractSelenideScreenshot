@@ -1,0 +1,36 @@
+name: bypass branch protection
+
+on:
+  push:
+    branches:
+      - 'bypass-branch-rule'
+
+env:
+  # Use the same ssh-agent socket value across all jobs
+  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+jobs:
+  bypass:
+    runs-on: self-hosted
+    steps:
+      - name: Load Secrets
+        uses: Dashlane/load-secrets-action@v1.0.0
+        id: load_secrets
+        env:
+          ACTION_SECRET_PASSWORD: dl://A4636D9A-1590-41F0-AB0E-DBD4ACFCE679/password
+          DASHLANE_SERVICE_DEVICE_KEYS: ${{ secrets.DASHLANE_SERVICE_DEVICE_KEYS }}
+      - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ steps.load_secrets.outputs.ACTIONS_SECRET_PASSWORD }}
+      - name: Setup SSH with a passphrase
+        env:
+          DEPLOY_SSH_PASSPHRASE: ${{ steps.load_secrets.outputs.ACTIONS_SECRET_PASSWORD }}
+          DEPLOY_SSH_PRIVATE_KEY: ${{secrets.DEPLOY_SSH_PRIVATE_KEY}}
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          echo "echo $DEPLOY_SSH_PASSPHRASE" > ~/.ssh_askpass && chmod +x ~/.ssh_askpass
+          echo "$DEPLOY_SSH_PRIVATE_KEY" | tr -d '\r' | DISPLAY=None SSH_ASKPASS=~/.ssh_askpass ssh-add - >/dev/null
+      - name: Git
+        run: |
+          echo "test-${{ github.run_id }}" >> README.md
+          git push
