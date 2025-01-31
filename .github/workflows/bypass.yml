@@ -23,6 +23,7 @@ jobs:
           git config user.name "automation-mm"
           git add ./README.md
           git commit -m "test"
-          git config pull.rebase false
-          git pull
-          git push origin ${{ github.ref_name }}:main
+      - uses: ad-m/github-push-action@v0.8.0
+        with:
+          branch: main
+          ssh: true
