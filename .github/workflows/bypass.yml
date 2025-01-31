@@ -1,13 +1,9 @@
 name: bypass branch protection
 
 on:
-  push:
-    branches:
-      - 'bypass-branch-rule'
-
-env:
-  # Use the same ssh-agent socket value across all jobs
-  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+  pull_request:
+    types:
+      - closed
 
 jobs:
   bypass:
@@ -23,7 +19,4 @@ jobs:
           git config user.name "automation-mm"
           git add ./README.md
           git commit -m "test"
-      - uses: ad-m/github-push-action@v0.8.0
-        with:
-          branch: main
-          ssh: true
+          git push

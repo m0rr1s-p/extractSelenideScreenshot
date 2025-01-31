@@ -43,17 +43,4 @@ with:
 
 ## Outputs
 
-None. Just the step summary. 
-test-13072152332
-test-13072154110
-test-13072156451
-test-13072159401
-test-13072161103
-test-13072163608
-test-13072166897
-test-13072168886
-test-13072171254
-test
-test
-test
-test
+None. Just the step summary.
