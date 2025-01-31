@@ -25,7 +25,6 @@ with:
   repo-name: ${{ github.repository }}
   hosting-url: ${{ vars.CHEVERETO_HOSTING_URL }}
   api-key: ${{ secret.CHEVERETO_API_KEY }}
-
   images: './*.png'
 ```
 
