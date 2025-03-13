@@ -7,17 +7,16 @@ on:
 
 jobs:
   bypass:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
           ssh-key: ${{ secrets.GH_DEPLOY_KEY }}
       - name: Git
         run: |
-          echo "test-${{ github.run_id }}" >> ./app/pom.xml
+          echo "test-${{ github.run_id }}" >> app/pom.xml
           git config user.email "devops@mineral-minds.de"
           git config user.name "automation-mm"
           git add app/pom.xml
           git commit -m "test"
-          git push
+          git push origin main
