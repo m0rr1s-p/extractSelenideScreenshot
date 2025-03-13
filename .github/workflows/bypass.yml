@@ -16,9 +16,9 @@ jobs:
       - name: Git
         run: |
           echo ${{ github.ref_name }}
-          echo "test-${{ github.run_id }}" >> __tests__/index.tests.ts
+          echo "test-${{ github.run_id }}" >> __tests__/index.test.ts
           git config user.email "devops@mineral-minds.de"
           git config user.name "automation-mm"
-          git add __tests__/index.tests.ts
+          git add __tests__/index.test.ts
           git commit -m "version update"
           git push origin main
