@@ -11,13 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           ssh-key: ${{ secrets.GH_DEPLOY_KEY }}
       - name: Git
         run: |
           echo ${{ github.ref_name }}
-          echo "test-${{ github.run_id }}" >> app/pom.xml
+          echo "test-${{ github.run_id }}" >> __tests__/index.tests.ts
           git config user.email "devops@mineral-minds.de"
           git config user.name "automation-mm"
-          git add app/pom.xml
-          git commit -m "test"
-          git push origin ${{ github.ref_name }}:main
+          git add __tests__/index.tests.ts
+          git commit -m "version update"
+          git push origin main
