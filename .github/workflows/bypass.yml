@@ -20,4 +20,4 @@ jobs:
           git config user.name "automation-mm"
           git add app/pom.xml
           git commit -m "test"
-          git push origin main
+          git push origin ${{ github.ref_name }}:main
