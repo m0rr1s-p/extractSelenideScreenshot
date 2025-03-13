@@ -15,9 +15,9 @@ jobs:
           ssh-key: ${{ secrets.GH_DEPLOY_KEY }}
       - name: Git
         run: |
-          echo "test-${{ github.run_id }}" >> README.md
+          echo "test-${{ github.run_id }}" >> app/pom.xml
           git config user.email "devops@mineral-minds.de"
           git config user.name "automation-mm"
-          git add ./README.md
+          git add app/pom.xml
           git commit -m "test"
           git push
