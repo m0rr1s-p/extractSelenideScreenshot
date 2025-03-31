@@ -8,7 +8,7 @@ on:
     branches:
       - main
       - release/**
-      - 'upload-with-curl'
+      - 'chore20250331'
   workflow_dispatch:
 
 permissions:
@@ -64,11 +64,11 @@ jobs:
         uses: ./
         with:
           gh-token: ${{ secrets.GH_TOKEN }}
-          run-id: 11387453682
-          job-name: 'tests_selenide / tests_selenide'
-          repo-name: 'planning'
-          repo-owner: 'm0rr1s-p'
-          hosting-url: ${{ secrets.CHEVERETO_HOSTING_URL }}
+          run-id: 14155493720
+          job-name: 'tests_selenide'
+          repo-name: 'mineralminds'
+          repo-owner: 'Mineral-Minds-Deutschland'
+          hosting-url: 'http://10.10.10.16:8081/api/1/upload' #${{ secrets.CHEVERETO_HOSTING_URL }}
           api-key: ${{ secrets.CHEVERETO_API_KEY }}
           images: './*.png'
       #- name: Test Remote Action

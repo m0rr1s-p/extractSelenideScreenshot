@@ -8,10 +8,10 @@
 ## General
 
 This Action extracts base64 encoded images (screenshots) made by Selenide and
-converts them to PNG. After that the images are uploaded to
-a Chevereto instance, which can be hosted by yourself. Then
-the image will be added to the step summary with Markdown. The images will be
-saved in the working directory with the name "screenshot<index>.png".
+converts them to PNG. After that the images are uploaded to a Chevereto
+instance, which can be hosted by yourself. Then the image will be added to the
+step summary with Markdown. The images will be saved in the working directory
+with the name "screenshot<index>.png".
 
 ## Usage
 
@@ -31,7 +31,7 @@ with:
 ## Inputs
 
 | Input       | Description                                                    |
-|-------------|----------------------------------------------------------------|
+| ----------- | -------------------------------------------------------------- |
 | gh-token    | Personal Access Token for accessing the workflow run logs      |
 | run-id      | The run ID of the job you want to extract the screenshots from |
 | job-name    | The name of the job which creates the logs                     |
@@ -40,22 +40,6 @@ with:
 | hosting-url | The URL of your Chevereto instance                             |
 | api-key     | Your Chevereto API key                                         |
 
-
 ## Outputs
 
-None. Just the step summary. 
-test-13072152332
-test-13072154110
-test-13072156451
-test-13072159401
-test-13072161103
-test-13072163608
-test-13072166897
-test-13072168886
-test-13072171254
-test
-test
-test
-test
-test-13073087430
-test-13832273327
+None. Just the step summary.
