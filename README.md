@@ -40,7 +40,6 @@ with:
 | hosting-url | The URL of your Chevereto instance                             |
 | api-key     | Your Chevereto API key                                         |
 
-
 ## Outputs
 
-None. Just the step summary. 
+None. Just the step summary.
